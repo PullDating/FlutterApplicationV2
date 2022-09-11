@@ -1,16 +1,21 @@
 # pull
 
-A new Flutter project.
+Pull is an open source dating app founded by William Dormer. The purpose is to create an online dating
+platform that better aligns the needs of the people with the app. Match.com has developed a near monopoly
+in the online dating landscape, and this has lead to manipulation and predatory buisiness tactics. 
+With this project I hope to give them a run for their money, and hopefully improve the situation, either
+by replacing them, or forcing them to improve to stay competitive. 
+
+Online dating is not a trivial industry. Societies, democracies in particular, rely on having stable
+families for the economy to survive. Unpaired young men can be dangerous, as has been shown time and
+time again in history. In short, I view this as a necessary act of public service, rather than a business.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This flutter application depends on the accompanying backend service. This can be found in the 
+APIGateway repo within the Pull Dating Org on github. 
 
-A few resources to get you started if this is your first Flutter project:
+## To update models:
+run this command:  flutter pub run build_runner build   
+it generates the supporting files for the freezed classes. 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

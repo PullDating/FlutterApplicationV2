@@ -1,17 +1,40 @@
-import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:pull/pages/home/home.dart';
+import 'package:pull/pages/login/one_time_password.dart';
+import 'package:pull/pages/home/match_list.dart';
+import 'package:pull/pages/home/profile_overview.dart';
+import 'package:pull/pages/home/swiping.dart';
+import 'firebase_options.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import 'pages/login/login.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(
+    ProviderScope(
+      child: PullApp()
+    )
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class PullApp extends ConsumerWidget {
+  PullApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MaterialApp.router(
+      routeInformationParser: _router.routeInformationParser,
+      routerDelegate: _router.routerDelegate,
+      routeInformationProvider: _router.routeInformationProvider,
+      title: 'Pull',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -23,11 +46,41 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
+
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
+
+  final GoRouter _router = GoRouter(
+    routes: <GoRoute>[
+
+      //login routes
+      GoRoute(
+        path: '/',
+        builder: (BuildContext context, GoRouterState state) {
+          return const LoginPage();
+        }
+      ),
+      GoRoute(
+        path: '/login/one_time_password',
+        builder: (BuildContext context, GoRouterState state) {
+          return const OneTimePasswordPage();
+        }
+      ),
+
+      //main app routes
+      GoRoute(
+          path: '/home',
+          builder: (BuildContext context, GoRouterState state) {
+            return const HomePage(title: "pull",);
+          }
+      ),
+    ]
+  );
+
 }
+
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
