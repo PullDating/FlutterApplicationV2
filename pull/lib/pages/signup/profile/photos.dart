@@ -58,6 +58,12 @@ class _PhotoPageState extends ConsumerState<PhotoPage> {
   }
 
   void _onReorder(int oldIndex, int newIndex) {
+
+    if(oldIndex >= ref.read(accountCreationPhotosProvider).length){
+      //can't reorder the unfilled photos.
+      return;
+    }
+
     setState(() {
       print("reordering: old index: $oldIndex, new index: $newIndex");
       //check to make sure they aren't arranging the empty ones

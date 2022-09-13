@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pull/functions/image_utils.dart';
 import 'package:pull/models/filter.dart';
 import 'package:pull/models/profile.dart';
 import 'package:pull/network/pull_api/api_uris.dart';
@@ -14,8 +12,6 @@ import 'package:pull/providers/network/uuid.dart';
 import 'package:http/http.dart' as http;
 
 import 'dart:convert';
-
-import 'package:pull/providers/profile.dart';
 
 class PullRepository {
   PullRepository(this._read);
@@ -83,7 +79,7 @@ class PullRepository {
     Map<String,String> headers = {};
     headers.addAll(_authHeader);
     headers.addAll(_uuid);
-    print("uuid: ${_uuid}");
+    print("uuid: $_uuid");
     if(targetUUID != null){
       headers.addAll({"target" : targetUUID});
     }
@@ -199,7 +195,7 @@ class PullRepository {
     }
 
     try{
-      print("numfilled: ${numFilled}");
+      print("numfilled: $numFilled");
       print("change_photos length: ${change_photos.length}");
       for(int i = 0; i < numFilled; i++){
         //if at position i, there is a -1 in the change_photos, do we want to upload it.
@@ -223,7 +219,7 @@ class PullRepository {
     //add the reorderphotos functionality. Convert the list to json first.
     Map<String, String> changePhotoJson = {};
     for(int i = 0; i < change_photos.length; i++){
-      changePhotoJson.addAll({"\"${i}\"" : "\"${change_photos.elementAt(i)}\""});
+      changePhotoJson.addAll({"\"$i\"" : "\"${change_photos.elementAt(i)}\""});
     }
 
     print("change Photo Json string");

@@ -155,15 +155,16 @@ class _AccountCreationControllerState extends ConsumerState<AccountCreationContr
                 children: [
                   Expanded(
                     child: TabBarView(
+                      physics: const NeverScrollableScrollPhysics(),
                       children: [
-                        NamePage(),
-                        GenderPage(),
-                        DatingGoalPage(),
-                        BirthDatePage(),
-                        PhotoPage(),
-                        HeightPage(),
-                        BodyTypePage(),
-                        BiographyPage(),
+                        const NamePage(),
+                        const GenderPage(),
+                        const DatingGoalPage(),
+                        const BirthDatePage(),
+                        const PhotoPage(),
+                        const HeightPage(),
+                        const BodyTypePage(),
+                        const BiographyPage(),
                         FilterPage(),
                       ],
                     ),

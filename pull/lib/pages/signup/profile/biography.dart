@@ -31,7 +31,11 @@ class _BiographyPageState extends ConsumerState<BiographyPage> {
   @override
   Widget build(BuildContext context) {
 
-    _controller.text = (ref.watch(accountCreationBiographyProvider) == null) ? '' : ref.watch(accountCreationBiographyProvider)!;
+    String text = (ref.watch(accountCreationBiographyProvider) == null) ? '' : ref.watch(accountCreationBiographyProvider)!;
+    _controller.value = TextEditingValue(
+      text: text,
+      selection: TextSelection(baseOffset: text.length, extentOffset: text.length),
+    );
 
     return LayoutBuilder(
       builder: (context, constraints) {

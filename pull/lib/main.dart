@@ -1,9 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:pull/pages/home/home.dart';
 import 'package:pull/pages/login/one_time_password.dart';
-import 'package:pull/pages/home/match_list.dart';
-import 'package:pull/pages/home/profile_overview.dart';
-import 'package:pull/pages/home/swiping.dart';
 import 'package:pull/pages/signup/profile/accountCreationController.dart';
 import 'firebase_options.dart';
 
