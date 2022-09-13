@@ -127,7 +127,7 @@ class PullRepository {
     List<http.MultipartFile> filesToUpload = [];
     int numFilled = profile.images.length;
 
-    if(numFilled > _read(minProfileImageCountProvider) || numFilled < _read(maxProfileImageCountProvider)){
+    if(numFilled < _read(minProfileImageCountProvider) || numFilled > _read(maxProfileImageCountProvider)){
       throw Exception("Invalid number of photos to create profile");
     }
 
@@ -290,6 +290,55 @@ class PullRepository {
       throw Exception("Error trying to get filters from server.");
     }
   }
+
+  Future<void> createFilter(Filter filter) async {
+    //calculate the correct date values based on the inputted ages.
+    //DateTime currentDate = DateTime.now();
+    //DateTime minBirthDate = DateTime(currentDate.year - filters.upperAge, currentDate.month, currentDate.day);
+    //DateTime maxBirthDate = DateTime(currentDate.year - filters.lowerAge, currentDate.month, currentDate.day);
+
+    Map<String,String> headers = {};
+    headers.addAll(_authHeader);
+    headers.addAll(_uuid);
+    headers.addAll({"content-type" : "application/json"});
+
+    //create the request.
+    var response = await http.post(
+        filterUri,
+        body: jsonEncode(<String,String>
+        {
+          "minAge" : filter.minAge.toString(),
+          "maxAge" : filter.maxAge.toString(),
+          "minHeight" : filter.maxHeight.toString(),
+          "maxHeight" : filter.minHeight.toString(),
+          "genderMan" : filter.genderMan.toString(),
+          "genderWoman" : filter.genderWoman.toString(),
+          "genderNonBinary" : filter.genderNonBinary.toString(),
+          "btLean" : filter.btLean.toString(),
+          "btAverage" : filter.btAverage.toString(),
+          "btMuscular" : filter.btMuscular.toString(),
+          "btHeavy" : filter.btHeavy.toString(),
+          "btObese" : filter.btObese.toString(),
+          "maxDistance" : filter.maxDistance.toString(),
+        }
+        ),
+        headers: headers
+    );
+
+    //interpret the response.
+    if(response.statusCode == 200){
+      print("Success");
+      final Map parsed = json.decode(response.body);
+      print(parsed['message']);
+      return;
+    }else{
+      print("Something's wrong");
+      print(response);
+      throw Exception("Error sending filter information to the server.");
+      return;
+    }
+  }
+
 
   //helper functions
 

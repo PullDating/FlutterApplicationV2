@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pull/models/profile.dart';
 import 'package:pull/network/pull_api/repository.dart';
 import 'package:pull/pages/signup/filters/filters.dart';
@@ -58,16 +59,12 @@ class _AccountCreationControllerState extends ConsumerState<AccountCreationContr
     LocationData locationData = await location.getLocation();
     //call the post profile endpoint
     try {
-
       double? longitude = locationData.longitude;
       double? latitude = locationData.latitude;
-
       if(latitude == null || longitude == null){
         throw Exception("Couldn't get valid location data for longitude and latitude.");
       }
-
-
-      repo.createProfile(
+      await repo.createProfile(
           Profile(
             biography: ref.read(accountCreationBiographyProvider)!,
             birthdate: ref.read(accountCreationBirthDateProvider)!,
@@ -87,15 +84,21 @@ class _AccountCreationControllerState extends ConsumerState<AccountCreationContr
             uuid: ref.read(uuidProvider)!,
           )
       );
+      //call the post filters endpoint
+      try{
+        //set the filter and profile providers for general purpose
+        await repo.createFilter(ref.read(accountCreationFilterProvider));
+        //redirect to home page.
+        context.go('/home');
+      }catch(e){
+        print(e);
+        throw Exception("Couldn't send the creat filter request.");
+      }
+
     } catch (e) {
       print(e);
       throw Exception("Couldn't send the create profile request.");
     }
-    //call the post filters endpoint
-
-    //set the filter and profile providers for general purpose
-
-    //redirect to home page.
   }
 
   ///checks all the profile creation providers to see if their values are valid for the backend.
