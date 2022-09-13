@@ -11,18 +11,18 @@ part 'filter.g.dart';
 @unfreezed
 class Filter with _$Filter {
   factory Filter({
-    required bool men,
-    required bool women,
-    required bool nonBinary,
+    required bool genderMan,
+    required bool genderWoman,
+    required bool genderNonBinary,
     required int minAge,
     required int maxAge,
     required int minHeight,
     required int maxHeight,
-    required bool obese,
-    required bool heavy,
-    required bool muscular,
-    required bool average,
-    required bool lean,
+    required bool btObese,
+    required bool btHeavy,
+    required bool btMuscular,
+    required bool btAverage,
+    required bool btLean,
     ///max distance to the other user in meters
     required int maxDistance,
   }) = _Filter;

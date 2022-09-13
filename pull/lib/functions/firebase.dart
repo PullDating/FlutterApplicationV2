@@ -21,26 +21,25 @@ Future<void> signOrLogIn(UserCredential value, WidgetRef ref,
       }
 
       await repo
-          .loginRequest(await value.user!.getIdToken(),
+          .login(await value.user!.getIdToken(),
           ref.read(phoneNumberProvider)!.completeNumber)
           .then((value) async
     {
-      print("login request fired");
-      print(value);
       //todo run the setup function to populate providers after they have successfully logged in.
       await setupBasicProviders(ref);
-      print("done setup of basic providers");
       if (value == true) {
         await setupUserProviders(ref);
+        //go to the home page
         context.go('/home');
       }
       else {
-        //TODO update the context redirect here
+        //go to the account creation flow.
+        context.go('/accountcreation');
         //{context.go('/createProfile/name')}
       }
     });
   } catch (e) {
-  print(e);
+    print(e);
   }
 }
 }

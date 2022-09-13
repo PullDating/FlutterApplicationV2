@@ -28,7 +28,7 @@ class _ProfileOverviewPageState extends ConsumerState<ProfileOverviewPage> {
             children: [
               CircleAvatar(
                 radius: 100,
-                backgroundImage: ref.read(profileProvider)!.images[0]!.image,
+                backgroundImage: ref.watch(profileProvider)!.images[0]!.image,
               ),
               Positioned(
                 bottom: 0,

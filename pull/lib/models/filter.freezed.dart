@@ -20,12 +20,12 @@ Filter _$FilterFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Filter {
-  bool get men => throw _privateConstructorUsedError;
-  set men(bool value) => throw _privateConstructorUsedError;
-  bool get women => throw _privateConstructorUsedError;
-  set women(bool value) => throw _privateConstructorUsedError;
-  bool get nonBinary => throw _privateConstructorUsedError;
-  set nonBinary(bool value) => throw _privateConstructorUsedError;
+  bool get genderMan => throw _privateConstructorUsedError;
+  set genderMan(bool value) => throw _privateConstructorUsedError;
+  bool get genderWoman => throw _privateConstructorUsedError;
+  set genderWoman(bool value) => throw _privateConstructorUsedError;
+  bool get genderNonBinary => throw _privateConstructorUsedError;
+  set genderNonBinary(bool value) => throw _privateConstructorUsedError;
   int get minAge => throw _privateConstructorUsedError;
   set minAge(int value) => throw _privateConstructorUsedError;
   int get maxAge => throw _privateConstructorUsedError;
@@ -34,16 +34,16 @@ mixin _$Filter {
   set minHeight(int value) => throw _privateConstructorUsedError;
   int get maxHeight => throw _privateConstructorUsedError;
   set maxHeight(int value) => throw _privateConstructorUsedError;
-  bool get obese => throw _privateConstructorUsedError;
-  set obese(bool value) => throw _privateConstructorUsedError;
-  bool get heavy => throw _privateConstructorUsedError;
-  set heavy(bool value) => throw _privateConstructorUsedError;
-  bool get muscular => throw _privateConstructorUsedError;
-  set muscular(bool value) => throw _privateConstructorUsedError;
-  bool get average => throw _privateConstructorUsedError;
-  set average(bool value) => throw _privateConstructorUsedError;
-  bool get lean => throw _privateConstructorUsedError;
-  set lean(bool value) => throw _privateConstructorUsedError;
+  bool get btObese => throw _privateConstructorUsedError;
+  set btObese(bool value) => throw _privateConstructorUsedError;
+  bool get btHeavy => throw _privateConstructorUsedError;
+  set btHeavy(bool value) => throw _privateConstructorUsedError;
+  bool get btMuscular => throw _privateConstructorUsedError;
+  set btMuscular(bool value) => throw _privateConstructorUsedError;
+  bool get btAverage => throw _privateConstructorUsedError;
+  set btAverage(bool value) => throw _privateConstructorUsedError;
+  bool get btLean => throw _privateConstructorUsedError;
+  set btLean(bool value) => throw _privateConstructorUsedError;
 
   ///max distance to the other user in meters
   int get maxDistance => throw _privateConstructorUsedError;
@@ -61,18 +61,18 @@ abstract class $FilterCopyWith<$Res> {
   factory $FilterCopyWith(Filter value, $Res Function(Filter) then) =
       _$FilterCopyWithImpl<$Res>;
   $Res call(
-      {bool men,
-      bool women,
-      bool nonBinary,
+      {bool genderMan,
+      bool genderWoman,
+      bool genderNonBinary,
       int minAge,
       int maxAge,
       int minHeight,
       int maxHeight,
-      bool obese,
-      bool heavy,
-      bool muscular,
-      bool average,
-      bool lean,
+      bool btObese,
+      bool btHeavy,
+      bool btMuscular,
+      bool btAverage,
+      bool btLean,
       int maxDistance});
 }
 
@@ -86,32 +86,32 @@ class _$FilterCopyWithImpl<$Res> implements $FilterCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? men = freezed,
-    Object? women = freezed,
-    Object? nonBinary = freezed,
+    Object? genderMan = freezed,
+    Object? genderWoman = freezed,
+    Object? genderNonBinary = freezed,
     Object? minAge = freezed,
     Object? maxAge = freezed,
     Object? minHeight = freezed,
     Object? maxHeight = freezed,
-    Object? obese = freezed,
-    Object? heavy = freezed,
-    Object? muscular = freezed,
-    Object? average = freezed,
-    Object? lean = freezed,
+    Object? btObese = freezed,
+    Object? btHeavy = freezed,
+    Object? btMuscular = freezed,
+    Object? btAverage = freezed,
+    Object? btLean = freezed,
     Object? maxDistance = freezed,
   }) {
     return _then(_value.copyWith(
-      men: men == freezed
-          ? _value.men
-          : men // ignore: cast_nullable_to_non_nullable
+      genderMan: genderMan == freezed
+          ? _value.genderMan
+          : genderMan // ignore: cast_nullable_to_non_nullable
               as bool,
-      women: women == freezed
-          ? _value.women
-          : women // ignore: cast_nullable_to_non_nullable
+      genderWoman: genderWoman == freezed
+          ? _value.genderWoman
+          : genderWoman // ignore: cast_nullable_to_non_nullable
               as bool,
-      nonBinary: nonBinary == freezed
-          ? _value.nonBinary
-          : nonBinary // ignore: cast_nullable_to_non_nullable
+      genderNonBinary: genderNonBinary == freezed
+          ? _value.genderNonBinary
+          : genderNonBinary // ignore: cast_nullable_to_non_nullable
               as bool,
       minAge: minAge == freezed
           ? _value.minAge
@@ -129,25 +129,25 @@ class _$FilterCopyWithImpl<$Res> implements $FilterCopyWith<$Res> {
           ? _value.maxHeight
           : maxHeight // ignore: cast_nullable_to_non_nullable
               as int,
-      obese: obese == freezed
-          ? _value.obese
-          : obese // ignore: cast_nullable_to_non_nullable
+      btObese: btObese == freezed
+          ? _value.btObese
+          : btObese // ignore: cast_nullable_to_non_nullable
               as bool,
-      heavy: heavy == freezed
-          ? _value.heavy
-          : heavy // ignore: cast_nullable_to_non_nullable
+      btHeavy: btHeavy == freezed
+          ? _value.btHeavy
+          : btHeavy // ignore: cast_nullable_to_non_nullable
               as bool,
-      muscular: muscular == freezed
-          ? _value.muscular
-          : muscular // ignore: cast_nullable_to_non_nullable
+      btMuscular: btMuscular == freezed
+          ? _value.btMuscular
+          : btMuscular // ignore: cast_nullable_to_non_nullable
               as bool,
-      average: average == freezed
-          ? _value.average
-          : average // ignore: cast_nullable_to_non_nullable
+      btAverage: btAverage == freezed
+          ? _value.btAverage
+          : btAverage // ignore: cast_nullable_to_non_nullable
               as bool,
-      lean: lean == freezed
-          ? _value.lean
-          : lean // ignore: cast_nullable_to_non_nullable
+      btLean: btLean == freezed
+          ? _value.btLean
+          : btLean // ignore: cast_nullable_to_non_nullable
               as bool,
       maxDistance: maxDistance == freezed
           ? _value.maxDistance
@@ -163,18 +163,18 @@ abstract class _$$_FilterCopyWith<$Res> implements $FilterCopyWith<$Res> {
       __$$_FilterCopyWithImpl<$Res>;
   @override
   $Res call(
-      {bool men,
-      bool women,
-      bool nonBinary,
+      {bool genderMan,
+      bool genderWoman,
+      bool genderNonBinary,
       int minAge,
       int maxAge,
       int minHeight,
       int maxHeight,
-      bool obese,
-      bool heavy,
-      bool muscular,
-      bool average,
-      bool lean,
+      bool btObese,
+      bool btHeavy,
+      bool btMuscular,
+      bool btAverage,
+      bool btLean,
       int maxDistance});
 }
 
@@ -189,32 +189,32 @@ class __$$_FilterCopyWithImpl<$Res> extends _$FilterCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? men = freezed,
-    Object? women = freezed,
-    Object? nonBinary = freezed,
+    Object? genderMan = freezed,
+    Object? genderWoman = freezed,
+    Object? genderNonBinary = freezed,
     Object? minAge = freezed,
     Object? maxAge = freezed,
     Object? minHeight = freezed,
     Object? maxHeight = freezed,
-    Object? obese = freezed,
-    Object? heavy = freezed,
-    Object? muscular = freezed,
-    Object? average = freezed,
-    Object? lean = freezed,
+    Object? btObese = freezed,
+    Object? btHeavy = freezed,
+    Object? btMuscular = freezed,
+    Object? btAverage = freezed,
+    Object? btLean = freezed,
     Object? maxDistance = freezed,
   }) {
     return _then(_$_Filter(
-      men: men == freezed
-          ? _value.men
-          : men // ignore: cast_nullable_to_non_nullable
+      genderMan: genderMan == freezed
+          ? _value.genderMan
+          : genderMan // ignore: cast_nullable_to_non_nullable
               as bool,
-      women: women == freezed
-          ? _value.women
-          : women // ignore: cast_nullable_to_non_nullable
+      genderWoman: genderWoman == freezed
+          ? _value.genderWoman
+          : genderWoman // ignore: cast_nullable_to_non_nullable
               as bool,
-      nonBinary: nonBinary == freezed
-          ? _value.nonBinary
-          : nonBinary // ignore: cast_nullable_to_non_nullable
+      genderNonBinary: genderNonBinary == freezed
+          ? _value.genderNonBinary
+          : genderNonBinary // ignore: cast_nullable_to_non_nullable
               as bool,
       minAge: minAge == freezed
           ? _value.minAge
@@ -232,25 +232,25 @@ class __$$_FilterCopyWithImpl<$Res> extends _$FilterCopyWithImpl<$Res>
           ? _value.maxHeight
           : maxHeight // ignore: cast_nullable_to_non_nullable
               as int,
-      obese: obese == freezed
-          ? _value.obese
-          : obese // ignore: cast_nullable_to_non_nullable
+      btObese: btObese == freezed
+          ? _value.btObese
+          : btObese // ignore: cast_nullable_to_non_nullable
               as bool,
-      heavy: heavy == freezed
-          ? _value.heavy
-          : heavy // ignore: cast_nullable_to_non_nullable
+      btHeavy: btHeavy == freezed
+          ? _value.btHeavy
+          : btHeavy // ignore: cast_nullable_to_non_nullable
               as bool,
-      muscular: muscular == freezed
-          ? _value.muscular
-          : muscular // ignore: cast_nullable_to_non_nullable
+      btMuscular: btMuscular == freezed
+          ? _value.btMuscular
+          : btMuscular // ignore: cast_nullable_to_non_nullable
               as bool,
-      average: average == freezed
-          ? _value.average
-          : average // ignore: cast_nullable_to_non_nullable
+      btAverage: btAverage == freezed
+          ? _value.btAverage
+          : btAverage // ignore: cast_nullable_to_non_nullable
               as bool,
-      lean: lean == freezed
-          ? _value.lean
-          : lean // ignore: cast_nullable_to_non_nullable
+      btLean: btLean == freezed
+          ? _value.btLean
+          : btLean // ignore: cast_nullable_to_non_nullable
               as bool,
       maxDistance: maxDistance == freezed
           ? _value.maxDistance
@@ -264,29 +264,29 @@ class __$$_FilterCopyWithImpl<$Res> extends _$FilterCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Filter with DiagnosticableTreeMixin implements _Filter {
   _$_Filter(
-      {required this.men,
-      required this.women,
-      required this.nonBinary,
+      {required this.genderMan,
+      required this.genderWoman,
+      required this.genderNonBinary,
       required this.minAge,
       required this.maxAge,
       required this.minHeight,
       required this.maxHeight,
-      required this.obese,
-      required this.heavy,
-      required this.muscular,
-      required this.average,
-      required this.lean,
+      required this.btObese,
+      required this.btHeavy,
+      required this.btMuscular,
+      required this.btAverage,
+      required this.btLean,
       required this.maxDistance});
 
   factory _$_Filter.fromJson(Map<String, dynamic> json) =>
       _$$_FilterFromJson(json);
 
   @override
-  bool men;
+  bool genderMan;
   @override
-  bool women;
+  bool genderWoman;
   @override
-  bool nonBinary;
+  bool genderNonBinary;
   @override
   int minAge;
   @override
@@ -296,15 +296,15 @@ class _$_Filter with DiagnosticableTreeMixin implements _Filter {
   @override
   int maxHeight;
   @override
-  bool obese;
+  bool btObese;
   @override
-  bool heavy;
+  bool btHeavy;
   @override
-  bool muscular;
+  bool btMuscular;
   @override
-  bool average;
+  bool btAverage;
   @override
-  bool lean;
+  bool btLean;
 
   ///max distance to the other user in meters
   @override
@@ -312,7 +312,7 @@ class _$_Filter with DiagnosticableTreeMixin implements _Filter {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Filter(men: $men, women: $women, nonBinary: $nonBinary, minAge: $minAge, maxAge: $maxAge, minHeight: $minHeight, maxHeight: $maxHeight, obese: $obese, heavy: $heavy, muscular: $muscular, average: $average, lean: $lean, maxDistance: $maxDistance)';
+    return 'Filter(genderMan: $genderMan, genderWoman: $genderWoman, genderNonBinary: $genderNonBinary, minAge: $minAge, maxAge: $maxAge, minHeight: $minHeight, maxHeight: $maxHeight, btObese: $btObese, btHeavy: $btHeavy, btMuscular: $btMuscular, btAverage: $btAverage, btLean: $btLean, maxDistance: $maxDistance)';
   }
 
   @override
@@ -320,18 +320,18 @@ class _$_Filter with DiagnosticableTreeMixin implements _Filter {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Filter'))
-      ..add(DiagnosticsProperty('men', men))
-      ..add(DiagnosticsProperty('women', women))
-      ..add(DiagnosticsProperty('nonBinary', nonBinary))
+      ..add(DiagnosticsProperty('genderMan', genderMan))
+      ..add(DiagnosticsProperty('genderWoman', genderWoman))
+      ..add(DiagnosticsProperty('genderNonBinary', genderNonBinary))
       ..add(DiagnosticsProperty('minAge', minAge))
       ..add(DiagnosticsProperty('maxAge', maxAge))
       ..add(DiagnosticsProperty('minHeight', minHeight))
       ..add(DiagnosticsProperty('maxHeight', maxHeight))
-      ..add(DiagnosticsProperty('obese', obese))
-      ..add(DiagnosticsProperty('heavy', heavy))
-      ..add(DiagnosticsProperty('muscular', muscular))
-      ..add(DiagnosticsProperty('average', average))
-      ..add(DiagnosticsProperty('lean', lean))
+      ..add(DiagnosticsProperty('btObese', btObese))
+      ..add(DiagnosticsProperty('btHeavy', btHeavy))
+      ..add(DiagnosticsProperty('btMuscular', btMuscular))
+      ..add(DiagnosticsProperty('btAverage', btAverage))
+      ..add(DiagnosticsProperty('btLean', btLean))
       ..add(DiagnosticsProperty('maxDistance', maxDistance));
   }
 
@@ -350,31 +350,31 @@ class _$_Filter with DiagnosticableTreeMixin implements _Filter {
 
 abstract class _Filter implements Filter {
   factory _Filter(
-      {required bool men,
-      required bool women,
-      required bool nonBinary,
+      {required bool genderMan,
+      required bool genderWoman,
+      required bool genderNonBinary,
       required int minAge,
       required int maxAge,
       required int minHeight,
       required int maxHeight,
-      required bool obese,
-      required bool heavy,
-      required bool muscular,
-      required bool average,
-      required bool lean,
+      required bool btObese,
+      required bool btHeavy,
+      required bool btMuscular,
+      required bool btAverage,
+      required bool btLean,
       required int maxDistance}) = _$_Filter;
 
   factory _Filter.fromJson(Map<String, dynamic> json) = _$_Filter.fromJson;
 
   @override
-  bool get men;
-  set men(bool value);
+  bool get genderMan;
+  set genderMan(bool value);
   @override
-  bool get women;
-  set women(bool value);
+  bool get genderWoman;
+  set genderWoman(bool value);
   @override
-  bool get nonBinary;
-  set nonBinary(bool value);
+  bool get genderNonBinary;
+  set genderNonBinary(bool value);
   @override
   int get minAge;
   set minAge(int value);
@@ -388,20 +388,20 @@ abstract class _Filter implements Filter {
   int get maxHeight;
   set maxHeight(int value);
   @override
-  bool get obese;
-  set obese(bool value);
+  bool get btObese;
+  set btObese(bool value);
   @override
-  bool get heavy;
-  set heavy(bool value);
+  bool get btHeavy;
+  set btHeavy(bool value);
   @override
-  bool get muscular;
-  set muscular(bool value);
+  bool get btMuscular;
+  set btMuscular(bool value);
   @override
-  bool get average;
-  set average(bool value);
+  bool get btAverage;
+  set btAverage(bool value);
   @override
-  bool get lean;
-  set lean(bool value);
+  bool get btLean;
+  set btLean(bool value);
   @override
 
   ///max distance to the other user in meters

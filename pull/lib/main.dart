@@ -4,6 +4,7 @@ import 'package:pull/pages/login/one_time_password.dart';
 import 'package:pull/pages/home/match_list.dart';
 import 'package:pull/pages/home/profile_overview.dart';
 import 'package:pull/pages/home/swiping.dart';
+import 'package:pull/pages/signup/profile/accountCreationController.dart';
 import 'firebase_options.dart';
 
 import 'package:flutter/material.dart';
@@ -73,6 +74,13 @@ class PullApp extends ConsumerWidget {
           path: '/home',
           builder: (BuildContext context, GoRouterState state) {
             return const HomePage(title: "pull",);
+          }
+      ),
+
+      GoRoute(
+          path: '/accountcreation',
+          builder: (BuildContext context, GoRouterState state) {
+            return const AccountCreationController(title: "Create Account",);
           }
       ),
     ]
