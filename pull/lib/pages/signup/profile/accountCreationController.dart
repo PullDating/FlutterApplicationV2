@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pull/models/profile.dart';
+import 'package:pull/network/pull_api/repository.dart';
 import 'package:pull/pages/signup/filters/filters.dart';
 import 'package:pull/pages/signup/profile/biography.dart';
 import 'package:pull/pages/signup/profile/birth_date.dart';
@@ -18,6 +20,8 @@ import 'package:pull/providers/account_setup/gender.dart';
 import 'package:pull/providers/account_setup/height.dart';
 import 'package:pull/providers/account_setup/name.dart';
 import 'package:pull/providers/account_setup/photos.dart';
+import 'package:pull/providers/network/uuid.dart';
+import 'package:location/location.dart';
 
 class AccountCreationController extends ConsumerStatefulWidget {
   const AccountCreationController({
@@ -45,8 +49,53 @@ class _AccountCreationControllerState extends ConsumerState<AccountCreationContr
     Tab(icon: Icon(Icons.filter_alt)) //filters
   ];
 
-  _submit(){
+  ///submits the values to the database and redirects. Should ONLY be called after it has been
+  ///checked that the values from the account creation providers are valid.
+  _submit() async{
+    PullRepository repo = PullRepository(ref.read);
 
+    Location location = Location();
+    LocationData locationData = await location.getLocation();
+    //call the post profile endpoint
+    try {
+
+      double? longitude = locationData.longitude;
+      double? latitude = locationData.latitude;
+
+      if(latitude == null || longitude == null){
+        throw Exception("Couldn't get valid location data for longitude and latitude.");
+      }
+
+
+      repo.createProfile(
+          Profile(
+            biography: ref.read(accountCreationBiographyProvider)!,
+            birthdate: ref.read(accountCreationBirthDateProvider)!,
+            bodyType: ref.read(accountCreationBodyTypeProvider)!,
+            datingGoal: ref.read(accountCreationDatingGoalProvider)!,
+            gender: ref.read(accountCreationGenderProvider)!,
+            height: ref.read(accountCreationHeightProvider),
+            images: ref.read(accountCreationPhotosProvider),
+
+            //todo get current location
+
+              // ref.read(AccountCreationProvider.notifier).setLongitude(_locationData.longitude!);
+              // ref.read(AccountCreationProvider.notifier).setLatitude(_locationData.latitude!);
+            latitude: longitude,
+            longitude: latitude,
+            name: ref.read(accountCreationNameProvider)!,
+            uuid: ref.read(uuidProvider)!,
+          )
+      );
+    } catch (e) {
+      print(e);
+      throw Exception("Couldn't send the create profile request.");
+    }
+    //call the post filters endpoint
+
+    //set the filter and profile providers for general purpose
+
+    //redirect to home page.
   }
 
   ///checks all the profile creation providers to see if their values are valid for the backend.
@@ -87,8 +136,6 @@ class _AccountCreationControllerState extends ConsumerState<AccountCreationContr
 
     //see if all the providers are done and have valid values
     bool completed = _checkIfProfileSetupCompleted();
-
-    print("setup completed? $completed");
 
     return DefaultTabController(
       length: navBarItems.length,

@@ -93,7 +93,7 @@ class PullRepository {
       var json = jsonDecode(response.body);
 
       //handling images
-      List<Image> images = await getImagesFromImagePath(json['imagePath']);
+      List<File> images = await getFilesFromImagePath(json['imagePath']);
 
       var coordinates = json['lastLocation']['coordinates'];
 
@@ -107,7 +107,7 @@ class PullRepository {
         birthdate: birthdate,
         bodyType: json['bodyType'],
         gender: json['gender'],
-        height: double.parse(json['height'].toString()),
+        height: int.parse(json['height'].toString()),
         datingGoal: json['datingGoal'],
         biography: json['biography'],
         latitude: double.parse(coordinates[0].toString()),
@@ -121,18 +121,20 @@ class PullRepository {
     }
   }
 
-  Future<void> createProfile() async {
+  Future<void> createProfile(Profile profile) async {
     var request = http.MultipartRequest('POST', profileUri);
     request.headers.addAll(_authHeader);
     List<http.MultipartFile> filesToUpload = [];
-    int numFilled = _read(profileProvider)!.images.length;
+    int numFilled = profile.images.length;
 
     if(numFilled > _read(minProfileImageCountProvider) || numFilled < _read(maxProfileImageCountProvider)){
       throw Exception("Invalid number of photos to create profile");
     }
 
     for(int i = 0; i < numFilled; i++){
-      File tempfile = await saveImageToFile(_read(profileProvider)!.images[i]!);
+
+      File tempfile = profile.images[i]!;
+
       http.MultipartFile multifile = await http.MultipartFile.fromPath('photos',tempfile.path);
       filesToUpload.add(multifile);
     }
@@ -142,66 +144,36 @@ class PullRepository {
     var uuid = _uuid;
     request.fields.addAll(uuid);
 
-    String? name = _read(profileProvider)!.name;
-    if(name != null){
-      request.fields['name']= name;
-    }else{
-      throw Exception("name was not provided.");
-    }
+    String name = profile.name;
+    request.fields['name']= name;
 
-    DateTime? birthDate = _read(profileProvider)!.birthdate;
-    if(birthDate != null){
-      request.fields['birthDate']= birthDate.toString();
-    }else{
-      throw Exception("birthDate was not provided.");
-    }
+    DateTime birthDate = profile.birthdate;
+    request.fields['birthDate']= birthDate.toString();
 
-    String? gender = _read(profileProvider)!.gender;
-    if(gender != null){
-      request.fields['gender']= gender;
-    }else{
-      throw Exception("gender was not provided.");
-    }
 
-    double? height = _read(profileProvider)!.height;
-    if(height != null){
-      request.fields['height'] = height.toString();
-    }else{
-      throw Exception("height was not provided.");
-    }
+    String gender = profile.gender;
+    request.fields['gender']= gender;
 
-    String? datingGoal = _read(profileProvider)!.datingGoal;
-    if(datingGoal != null){
-      request.fields['datingGoal'] = datingGoal;
-    } else {
-      throw Exception("datingGoal was not provided.");
-    }
 
-    String? biography = _read(profileProvider)!.biography;
-    if(biography != null){
-      request.fields['biography'] = biography;
-    } else {
-      throw Exception("biography was not provided.");
-    }
+    int height = profile.height;
+    request.fields['height'] = height.toString();
 
-    String? bodyType = _read(profileProvider)!.bodyType;
-    if(bodyType != null){
-      request.fields['bodyType'] = bodyType;
-    } else {
-      throw Exception("bodyType was not provided");
-    }
 
-    double? longitude = _read(profileProvider)!.longitude;
-    if(longitude != null){
-      request.fields["longitude"] = longitude.toString();
-    }else{
-      throw Exception("longitude was not provided.");
-    }
+    String datingGoal = profile.datingGoal;
+    request.fields['datingGoal'] = datingGoal;
 
-    double? latitude = _read(profileProvider)!.latitude;
-    if(latitude != null){
-      request.fields['latitude'] = latitude.toString();
-    }
+
+    String biography = profile.biography;
+    request.fields['biography'] = biography;
+
+    String bodyType = profile.bodyType;
+    request.fields['bodyType'] = bodyType;
+
+    double longitude = profile.longitude;
+    request.fields["longitude"] = longitude.toString();
+
+    double latitude = profile.latitude;
+    request.fields['latitude'] = latitude.toString();
 
     try {
       var response = await request.send().timeout(const Duration(seconds: 3));
@@ -232,7 +204,7 @@ class PullRepository {
       for(int i = 0; i < numFilled; i++){
         //if at position i, there is a -1 in the change_photos, do we want to upload it.
         if(change_photos[i] == -1){
-          File tempfile = await saveImageToFile(newprofile.images[i]!);
+          File tempfile = newprofile.images[i]!;
           http.MultipartFile multifile = await http.MultipartFile.fromPath('photos', tempfile.path);
           filesToUpload.add(multifile);
         }
@@ -321,14 +293,13 @@ class PullRepository {
 
   //helper functions
 
-  Future<List<Image>> getImagesFromImagePath(Map<String,dynamic> imagePath) async {
+  Future<List<File>> getFilesFromImagePath(Map<String,dynamic> imagePath) async {
     imagePath.remove('bucket');
     int length = imagePath.keys.length;
-    List<Image> images = [];
-
+    List<File> images = [];
     for(String element in imagePath.keys){
       try{
-        images.add(getImageFromURL(imagePath[element]!));
+        images.add(getFileFromURL(imagePath[element]!));
       } catch (e) {
         print(e);
         throw Exception("Couldn't get image from imagePath");
@@ -337,10 +308,10 @@ class PullRepository {
     return images;
   }
 
-  Image getImageFromURL(String presignedUrl){
+  File getFileFromURL(String presignedUrl){
     try{
-      //Uri presignedUri = Uri.parse(presignedUrl);
-      return Image.network(presignedUrl);
+      Uri presignedUri = Uri.parse(presignedUrl);
+      return File.fromUri(presignedUri);
     } catch (e) {
       print(e);
       throw Exception("Couldn't get the file from the url given.");

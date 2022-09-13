@@ -4,6 +4,12 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>Allow the users to select photos for their profile</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Allow the users to take photos for their profile</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Allow the user to record audio in videos for their profile or chats</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

@@ -29,7 +29,10 @@ class _PhotoPageState extends ConsumerState<PhotoPage> {
   }
 
   void deleteImageCallback(int index){ //for when a thumbnail deletes an image.
-    ref.read(accountCreationPhotosProvider).removeAt(index);
+    print("deleting at index: $index, current length is ${ref.read(accountCreationPhotosProvider).length}");
+    setState(() {
+      ref.read(accountCreationPhotosProvider).removeAt(index);
+    });
   }
 
   Future pickImage(int index) async {
@@ -40,7 +43,13 @@ class _PhotoPageState extends ConsumerState<PhotoPage> {
         print("image was null, didn't pick image.");
         return;
       }
-      ref.read(accountCreationPhotosProvider).insert(index, Image.file(File(imageFile.path)));
+      setState(() {
+        print("length of files before: ${ref.read(accountCreationPhotosProvider).length}");
+        ref.read(accountCreationPhotosProvider).insert(index, File(imageFile.path));
+        print("length of files after: ${ref.read(accountCreationPhotosProvider).length}");
+      });
+
+      print("done picking image");
     } on PlatformException catch (e) {
       print("Failed to pick image: $e");
     } catch (e) {
@@ -50,6 +59,7 @@ class _PhotoPageState extends ConsumerState<PhotoPage> {
 
   void _onReorder(int oldIndex, int newIndex) {
     setState(() {
+      print("reordering: old index: $oldIndex, new index: $newIndex");
       //check to make sure they aren't arranging the empty ones
       ref.read(accountCreationPhotosProvider).insert(newIndex, ref.read(accountCreationPhotosProvider).elementAt(oldIndex));
       ref.read(accountCreationPhotosProvider).removeAt(oldIndex + 1);
@@ -59,10 +69,10 @@ class _PhotoPageState extends ConsumerState<PhotoPage> {
   @override
   Widget build(BuildContext context) {
 
-    List<Image> imageList = ref.watch(accountCreationPhotosProvider)!;
+    List<File> imageList = ref.watch(accountCreationPhotosProvider)!;
     int maxProfilePhotos = ref.watch(maxProfileImageCountProvider);
     int minProfilePhotos = ref.watch(minProfileImageCountProvider);
-    bool mandatoryFilled = imageList.length > minProfilePhotos;
+    bool mandatoryFilled = imageList.length >= minProfilePhotos;
     int totalFilled = imageList.length;
 
     var tiles = <ImageThumbnail>[];
@@ -70,7 +80,7 @@ class _PhotoPageState extends ConsumerState<PhotoPage> {
     //these are the mandatory photos that need to be filled in.
     for(int i = 0; i < minProfilePhotos; i++){
       tiles.add(ImageThumbnail(
-        image: (totalFilled > i+1)? imageList[i]: null,
+        image: (totalFilled > i)? Image.file(imageList[i]): null,
         pickImage: pickImage,
         deleteImageCallback: deleteImageCallback,
         index: i,
@@ -82,7 +92,7 @@ class _PhotoPageState extends ConsumerState<PhotoPage> {
     //these are the ones that are optional, but only show the number they have plus one to ensure they add the correct order.
     for(int i = minProfilePhotos; i < min(max(minProfilePhotos+1, totalFilled+1),maxProfilePhotos); i++){
       tiles.add(ImageThumbnail(
-        image: (totalFilled > i+1)? imageList[i] : null,
+        image: (totalFilled > i)? Image.file(imageList[i]) : null,
         pickImage: pickImage,
         deleteImageCallback: deleteImageCallback,
         index: i,
@@ -97,6 +107,7 @@ class _PhotoPageState extends ConsumerState<PhotoPage> {
           width: double.infinity,
           child: Column(
             children: [
+              //(imageList.isNotEmpty) ? Image.file(imageList[0]) : Container(),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: WrapList(

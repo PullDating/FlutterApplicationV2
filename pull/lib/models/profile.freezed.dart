@@ -24,23 +24,23 @@ mixin _$Profile {
   set name(String value) => throw _privateConstructorUsedError;
   DateTime get birthdate => throw _privateConstructorUsedError;
   set birthdate(DateTime value) => throw _privateConstructorUsedError;
-  String? get bodyType => throw _privateConstructorUsedError;
-  set bodyType(String? value) => throw _privateConstructorUsedError;
+  String get bodyType => throw _privateConstructorUsedError;
+  set bodyType(String value) => throw _privateConstructorUsedError;
   String get gender => throw _privateConstructorUsedError;
   set gender(String value) => throw _privateConstructorUsedError;
-  double? get height => throw _privateConstructorUsedError;
-  set height(double? value) => throw _privateConstructorUsedError;
+  int get height => throw _privateConstructorUsedError;
+  set height(int value) => throw _privateConstructorUsedError;
   String get datingGoal => throw _privateConstructorUsedError;
   set datingGoal(String value) => throw _privateConstructorUsedError;
-  String? get biography => throw _privateConstructorUsedError;
-  set biography(String? value) => throw _privateConstructorUsedError;
+  String get biography => throw _privateConstructorUsedError;
+  set biography(String value) => throw _privateConstructorUsedError;
   double get latitude => throw _privateConstructorUsedError;
   set latitude(double value) => throw _privateConstructorUsedError;
   double get longitude => throw _privateConstructorUsedError;
   set longitude(double value) =>
       throw _privateConstructorUsedError; //for images
-  List<Image?> get images => throw _privateConstructorUsedError; //for images
-  set images(List<Image?> value) => throw _privateConstructorUsedError;
+  List<File?> get images => throw _privateConstructorUsedError; //for images
+  set images(List<File?> value) => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProfileCopyWith<Profile> get copyWith => throw _privateConstructorUsedError;
@@ -54,14 +54,14 @@ abstract class $ProfileCopyWith<$Res> {
       {String uuid,
       String name,
       DateTime birthdate,
-      String? bodyType,
+      String bodyType,
       String gender,
-      double? height,
+      int height,
       String datingGoal,
-      String? biography,
+      String biography,
       double latitude,
       double longitude,
-      List<Image?> images});
+      List<File?> images});
 }
 
 /// @nodoc
@@ -102,7 +102,7 @@ class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
       bodyType: bodyType == freezed
           ? _value.bodyType
           : bodyType // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       gender: gender == freezed
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
@@ -110,7 +110,7 @@ class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
       height: height == freezed
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as int,
       datingGoal: datingGoal == freezed
           ? _value.datingGoal
           : datingGoal // ignore: cast_nullable_to_non_nullable
@@ -118,7 +118,7 @@ class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
       biography: biography == freezed
           ? _value.biography
           : biography // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       latitude: latitude == freezed
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
@@ -130,7 +130,7 @@ class _$ProfileCopyWithImpl<$Res> implements $ProfileCopyWith<$Res> {
       images: images == freezed
           ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
-              as List<Image?>,
+              as List<File?>,
     ));
   }
 }
@@ -145,14 +145,14 @@ abstract class _$$_ProfileCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       {String uuid,
       String name,
       DateTime birthdate,
-      String? bodyType,
+      String bodyType,
       String gender,
-      double? height,
+      int height,
       String datingGoal,
-      String? biography,
+      String biography,
       double latitude,
       double longitude,
-      List<Image?> images});
+      List<File?> images});
 }
 
 /// @nodoc
@@ -194,7 +194,7 @@ class __$$_ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
       bodyType: bodyType == freezed
           ? _value.bodyType
           : bodyType // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       gender: gender == freezed
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
@@ -202,7 +202,7 @@ class __$$_ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
       height: height == freezed
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as int,
       datingGoal: datingGoal == freezed
           ? _value.datingGoal
           : datingGoal // ignore: cast_nullable_to_non_nullable
@@ -210,7 +210,7 @@ class __$$_ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
       biography: biography == freezed
           ? _value.biography
           : biography // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       latitude: latitude == freezed
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
@@ -222,7 +222,7 @@ class __$$_ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
       images: images == freezed
           ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
-              as List<Image?>,
+              as List<File?>,
     ));
   }
 }
@@ -234,11 +234,11 @@ class _$_Profile with DiagnosticableTreeMixin implements _Profile {
       {required this.uuid,
       required this.name,
       required this.birthdate,
-      this.bodyType,
+      required this.bodyType,
       required this.gender,
-      this.height,
+      required this.height,
       required this.datingGoal,
-      this.biography,
+      required this.biography,
       required this.latitude,
       required this.longitude,
       required this.images});
@@ -251,22 +251,22 @@ class _$_Profile with DiagnosticableTreeMixin implements _Profile {
   @override
   DateTime birthdate;
   @override
-  String? bodyType;
+  String bodyType;
   @override
   String gender;
   @override
-  double? height;
+  int height;
   @override
   String datingGoal;
   @override
-  String? biography;
+  String biography;
   @override
   double latitude;
   @override
   double longitude;
 //for images
   @override
-  List<Image?> images;
+  List<File?> images;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -302,14 +302,14 @@ abstract class _Profile implements Profile {
       {required String uuid,
       required String name,
       required DateTime birthdate,
-      String? bodyType,
+      required String bodyType,
       required String gender,
-      double? height,
+      required int height,
       required String datingGoal,
-      String? biography,
+      required String biography,
       required double latitude,
       required double longitude,
-      required List<Image?> images}) = _$_Profile;
+      required List<File?> images}) = _$_Profile;
 
   @override //the unique identifier of the user, used for backend api calls
   String
@@ -322,20 +322,20 @@ abstract class _Profile implements Profile {
   DateTime get birthdate;
   set birthdate(DateTime value);
   @override
-  String? get bodyType;
-  set bodyType(String? value);
+  String get bodyType;
+  set bodyType(String value);
   @override
   String get gender;
   set gender(String value);
   @override
-  double? get height;
-  set height(double? value);
+  int get height;
+  set height(int value);
   @override
   String get datingGoal;
   set datingGoal(String value);
   @override
-  String? get biography;
-  set biography(String? value);
+  String get biography;
+  set biography(String value);
   @override
   double get latitude;
   set latitude(double value);
@@ -343,8 +343,8 @@ abstract class _Profile implements Profile {
   double get longitude;
   set longitude(double value);
   @override //for images
-  List<Image?> get images; //for images
-  set images(List<Image?> value);
+  List<File?> get images; //for images
+  set images(List<File?> value);
   @override
   @JsonKey(ignore: true)
   _$$_ProfileCopyWith<_$_Profile> get copyWith =>
