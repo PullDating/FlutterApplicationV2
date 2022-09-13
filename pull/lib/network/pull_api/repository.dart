@@ -309,8 +309,8 @@ class PullRepository {
         {
           "minAge" : filter.minAge.toString(),
           "maxAge" : filter.maxAge.toString(),
-          "minHeight" : filter.maxHeight.toString(),
-          "maxHeight" : filter.minHeight.toString(),
+          "minHeight" : filter.minHeight.toString(),
+          "maxHeight" : filter.maxHeight.toString(),
           "genderMan" : filter.genderMan.toString(),
           "genderWoman" : filter.genderWoman.toString(),
           "genderNonBinary" : filter.genderNonBinary.toString(),
