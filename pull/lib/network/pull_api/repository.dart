@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pull/models/filter.dart';
 import 'package:pull/models/profile.dart';
 import 'package:pull/network/pull_api/api_uris.dart';
@@ -288,10 +290,19 @@ class PullRepository {
     headers.addAll(_uuid);
     http.Response response = await http.get(filterUri, headers: headers);
     if(response.statusCode == 200){
-      print("filter get values");
-      print(jsonDecode(response.body));
-      Filter filters = Filter.fromJson(jsonDecode(response.body));
-      return filters;
+
+      try {
+        print("filter get values");
+        print(jsonDecode(response.body));
+        Map<String, dynamic> results = jsonDecode(response.body);
+        print(results);
+
+        Filter filters = Filter.fromJson(jsonDecode(response.body));
+        return filters;
+      } catch (e) {
+        print(e);
+        throw Exception("Couldn't create filter instance AFTER getting information from server.");
+      }
     } else {
       throw Exception("Error trying to get filters from server.");
     }
@@ -354,7 +365,7 @@ class PullRepository {
     List<File> images = [];
     for(String element in imagePath.keys){
       try{
-        images.add(getFileFromURL(imagePath[element]!));
+        images.add(await getFileFromURL(imagePath[element]!));
       } catch (e) {
         print(e);
         throw Exception("Couldn't get image from imagePath");
@@ -363,10 +374,34 @@ class PullRepository {
     return images;
   }
 
-  File getFileFromURL(String presignedUrl){
+  Future<File> getFileFromURL(String presignedUrl) async {
     try{
-      Uri presignedUri = Uri.parse(presignedUrl);
-      return File.fromUri(presignedUri);
+
+      print("trying to get image from presigned url: " + presignedUrl);
+
+      //generate random number.
+      var rng = new Random();
+
+      //get temporary directory of device.
+      Directory tempDir = await getTemporaryDirectory();
+
+      //get temporary path from the temp directory
+      String tempPath = tempDir.path;
+
+      //create a new file in temporary path with random file name.
+      File file = new File('$tempPath' + (rng.nextInt(100)).toString() + '.webp');
+
+      //create uri from the presigned url
+      Uri imageUri = Uri.parse(presignedUrl);
+
+      //call http.get method and pass imageUrl into it to get respose.
+      http.Response response = await http.get(imageUri);
+
+      //write the body bytes to file
+      await file.writeAsBytes(response.bodyBytes);
+
+      //now return the file which is created with random name in temp location
+      return file;
     } catch (e) {
       print(e);
       throw Exception("Couldn't get the file from the url given.");
