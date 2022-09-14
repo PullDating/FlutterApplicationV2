@@ -74,19 +74,20 @@ class _AccountCreationControllerState extends ConsumerState<AccountCreationContr
         gender: ref.read(accountCreationGenderProvider)!,
         height: ref.read(accountCreationHeightProvider),
         images: ref.read(accountCreationPhotosProvider),
-
-        //todo get current location
-
-        // ref.read(AccountCreationProvider.notifier).setLongitude(_locationData.longitude!);
-        // ref.read(AccountCreationProvider.notifier).setLatitude(_locationData.latitude!);
         latitude: longitude,
         longitude: latitude,
         name: ref.read(accountCreationNameProvider)!,
         uuid: ref.read(uuidProvider)!,
       );
-      await repo.createProfile(
-          profileToUpload
-      );
+      try {
+        print("attemping to create profile");
+        await repo.createProfile(
+            profileToUpload
+        );
+      } catch (e){
+        print(e);
+        throw Exception("problem trying to create the profile after signup.");
+      }
       //call the post filters endpoint
       try{
         //set the filter and profile providers for general purpose use

@@ -129,10 +129,14 @@ class PullRepository {
 
     for(int i = 0; i < numFilled; i++){
 
-      File tempfile = profile.images[i]!;
-
-      http.MultipartFile multifile = await http.MultipartFile.fromPath('photos',tempfile.path);
-      filesToUpload.add(multifile);
+      try{
+        File tempfile = profile.images[i]!;
+        http.MultipartFile multifile = await http.MultipartFile.fromPath('photos',tempfile.path);
+        filesToUpload.add(multifile);
+      } catch (e) {
+        print(e);
+        throw Exception("Couldn't create multipart file from file");
+      }
     }
 
     request.files.addAll(filesToUpload);
@@ -172,6 +176,7 @@ class PullRepository {
     request.fields['latitude'] = latitude.toString();
 
     try {
+      print("attemping to send the create Profile request.");
       var response = await request.send().timeout(const Duration(seconds: 3));
       if(response.statusCode == 200){
         print("Success");
@@ -181,8 +186,13 @@ class PullRepository {
     } on TimeoutException catch (e) {
       print('Timeout');
       print(e);
+      throw Exception("Timeout trying to send the create profile request.");
     } on Error catch (e) {
       print('Error: $e');
+      throw Exception("Error trying to send the create profile request. (general error)");
+    } catch (e) {
+      print(e);
+      throw Exception("General exception trying to create the profile request.");
     }
   }
 

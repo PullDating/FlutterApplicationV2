@@ -18,11 +18,14 @@ class PullSwipeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(12.0),
-          child: Container(
-            height: constraints.maxHeight * 0.92,
-            width: constraints.maxWidth * 0.92,
+        return Container(
+          height: constraints.maxHeight * 0.92,
+          width: constraints.maxWidth * 0.92,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12.0),
+            child: Container(
+              color: Colors.red,
+            ),
           ),
         );
       }
