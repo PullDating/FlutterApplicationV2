@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pull/ui_widgets/swipe_card.dart';
 
 class SwipingPage extends ConsumerStatefulWidget {
   const SwipingPage({Key? key}) : super(key: key);
@@ -11,7 +12,6 @@ class SwipingPage extends ConsumerStatefulWidget {
 class _SwipingPageState extends ConsumerState<SwipingPage> {
   @override
   Widget build(BuildContext context) {
-    return Text("Hello there champ.");
-
+    return PullSwipeCard();
   }
 }

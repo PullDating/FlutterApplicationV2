@@ -21,8 +21,10 @@ import 'package:pull/providers/account_setup/gender.dart';
 import 'package:pull/providers/account_setup/height.dart';
 import 'package:pull/providers/account_setup/name.dart';
 import 'package:pull/providers/account_setup/photos.dart';
+import 'package:pull/providers/filter.dart';
 import 'package:pull/providers/network/uuid.dart';
 import 'package:location/location.dart';
+import 'package:pull/providers/profile.dart';
 
 class AccountCreationController extends ConsumerStatefulWidget {
   const AccountCreationController({
@@ -64,35 +66,39 @@ class _AccountCreationControllerState extends ConsumerState<AccountCreationContr
       if(latitude == null || longitude == null){
         throw Exception("Couldn't get valid location data for longitude and latitude.");
       }
+      Profile profileToUpload = Profile(
+        biography: ref.read(accountCreationBiographyProvider)!,
+        birthdate: ref.read(accountCreationBirthDateProvider)!,
+        bodyType: ref.read(accountCreationBodyTypeProvider)!,
+        datingGoal: ref.read(accountCreationDatingGoalProvider)!,
+        gender: ref.read(accountCreationGenderProvider)!,
+        height: ref.read(accountCreationHeightProvider),
+        images: ref.read(accountCreationPhotosProvider),
+
+        //todo get current location
+
+        // ref.read(AccountCreationProvider.notifier).setLongitude(_locationData.longitude!);
+        // ref.read(AccountCreationProvider.notifier).setLatitude(_locationData.latitude!);
+        latitude: longitude,
+        longitude: latitude,
+        name: ref.read(accountCreationNameProvider)!,
+        uuid: ref.read(uuidProvider)!,
+      );
       await repo.createProfile(
-          Profile(
-            biography: ref.read(accountCreationBiographyProvider)!,
-            birthdate: ref.read(accountCreationBirthDateProvider)!,
-            bodyType: ref.read(accountCreationBodyTypeProvider)!,
-            datingGoal: ref.read(accountCreationDatingGoalProvider)!,
-            gender: ref.read(accountCreationGenderProvider)!,
-            height: ref.read(accountCreationHeightProvider),
-            images: ref.read(accountCreationPhotosProvider),
-
-            //todo get current location
-
-              // ref.read(AccountCreationProvider.notifier).setLongitude(_locationData.longitude!);
-              // ref.read(AccountCreationProvider.notifier).setLatitude(_locationData.latitude!);
-            latitude: longitude,
-            longitude: latitude,
-            name: ref.read(accountCreationNameProvider)!,
-            uuid: ref.read(uuidProvider)!,
-          )
+          profileToUpload
       );
       //call the post filters endpoint
       try{
-        //set the filter and profile providers for general purpose
+        //set the filter and profile providers for general purpose use
         await repo.createFilter(ref.read(accountCreationFilterProvider));
+        ref.read(filterProvider.notifier).set(ref.read(accountCreationFilterProvider));
+        ref.read(profileProvider.notifier).set(profileToUpload);
+
         //redirect to home page.
         context.go('/home');
       }catch(e){
         print(e);
-        throw Exception("Couldn't send the creat filter request.");
+        throw Exception("Couldn't send the create filter request.");
       }
 
     } catch (e) {

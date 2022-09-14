@@ -61,14 +61,24 @@ class _PhotoPageState extends ConsumerState<PhotoPage> {
 
     if(oldIndex >= ref.read(accountCreationPhotosProvider).length){
       //can't reorder the unfilled photos.
+      print("can't reorder unfilled photos");
       return;
     }
 
     setState(() {
       print("reordering: old index: $oldIndex, new index: $newIndex");
       //check to make sure they aren't arranging the empty ones
-      ref.read(accountCreationPhotosProvider).insert(newIndex, ref.read(accountCreationPhotosProvider).elementAt(oldIndex));
-      ref.read(accountCreationPhotosProvider).removeAt(oldIndex + 1);
+
+      if(oldIndex > newIndex){
+        ref.read(accountCreationPhotosProvider).insert(newIndex, ref.read(accountCreationPhotosProvider).elementAt(oldIndex));
+        ref.read(accountCreationPhotosProvider).removeAt(oldIndex + 1);
+      } else {
+        ref.read(accountCreationPhotosProvider).insert(newIndex+1, ref.read(accountCreationPhotosProvider).elementAt(oldIndex));
+        ref.read(accountCreationPhotosProvider).removeAt(oldIndex);
+      }
+
+      //it is strange that I need to call setState to make this work, I think it might be because I'm calling the provider directly, not the notifier.
+
     });
   }
 

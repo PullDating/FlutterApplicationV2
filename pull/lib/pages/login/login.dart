@@ -24,11 +24,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
     if(phoneNumber != null){
       try{
+        print("attemping to validate firebase auth.");
         await FirebaseAuth.instance.verifyPhoneNumber(
           phoneNumber: phoneNumber!.completeNumber,
 
           //android only SMS auto complete.
           verificationCompleted: (PhoneAuthCredential credential) async {
+            print("using android auto SMS verification");
             //TODO hanlde this use case.
             await FirebaseAuth.instance
                 .signInWithCredential(credential)
@@ -38,6 +40,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           },
 
           verificationFailed: (FirebaseAuthException e) {
+            print("firebase verification failed.");
             print(e);
           },
 
@@ -55,6 +58,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
         );
       } catch (e) {
+        print("failed to validate firebase");
         print(e);
       }
     } else {
