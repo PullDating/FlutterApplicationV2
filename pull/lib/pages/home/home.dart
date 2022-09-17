@@ -32,7 +32,8 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           title: Text(title),
         ),
-        body: TabBarView(
+        body: const TabBarView(
+          physics: NeverScrollableScrollPhysics(),
           children: [
             SwipingPage(),
             MatchListPage(),

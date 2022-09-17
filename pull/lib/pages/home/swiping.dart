@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pull/models/person.dart';
 import 'package:pull/models/profile.dart';
+import 'package:pull/network/pull_api/repository.dart';
 import 'package:pull/providers/swiping/peopleProvider.dart';
 import 'package:pull/providers/swiping/people_count_target.dart';
 import 'package:pull/ui_widgets/swipe_card.dart';
@@ -43,20 +44,43 @@ class _SwipingPageState extends ConsumerState<SwipingPage> {
     _controller..removeListener(_listenController)..dispose();
   }
 
+  //ignore index, it is not used by us
   _preSwipeCheck(int index, SwipeDirection direction){
     print("pre swipe callback:");
     print("index: $index, direction: $direction");
+    switch (direction) {
+      case SwipeDirection.left:
+      case SwipeDirection.right:
+        return true;
+      case SwipeDirection.up:
+      case SwipeDirection.down:
+        return false;
+    }
   }
 
+//ignore index, it is not used by us
   _swipeCompleted(int index, SwipeDirection direction){
     print("swipe complete callback:");
-    print("index: $index, direction: $direction");
+    PullRepository repo = PullRepository(ref.read);
+    if(direction == SwipeDirection.left){
+      //dislike
+      repo.dislike(ref.read(peopleProvider)[0].uuid);
+    }else if (direction == SwipeDirection.right) {
+      //like
+      repo.like(ref.read(peopleProvider)[0].uuid);
+    }
+    ref.read(peopleProvider.notifier).remove();
   }
 
   @override
   Widget build(BuildContext context) {
 
     List<Person> peopleList = ref.watch(peopleProvider);
+
+    print("Current order of people list:");
+    for(int i = 0 ; i < peopleList.length;i++){
+      print(peopleList[i].uuid);
+    }
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -71,7 +95,15 @@ class _SwipingPageState extends ConsumerState<SwipingPage> {
         horizontalSwipeThreshold: 0.85,
         verticalSwipeThreshold: 1.0,
         builder: (BuildContext context, properties) {
-          return PullSwipeCard(person: peopleList[0]);
+
+          // Stack peopleStack = Stack(
+          //   children: [
+          //     PullSwipeCard(person: peopleList[0]!, key: UniqueKey(),),
+          //     //(peopleList.length > 1)? PullSwipeCard(person: peopleList[1], key: Key("PullSwipeCard:${peopleList[1].uuid}"),) : Container(),
+          //   ],
+          // );
+
+          return PullSwipeCard(person: peopleList[0],);
         },
       ) : Container(
         child: Center(

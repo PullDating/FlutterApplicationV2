@@ -426,6 +426,69 @@ class PullRepository {
     }
   }
 
+  //swipe endpoints
+  ///Called when a user swipes on a profile on the swiping page.
+  ///return [True] if there is a match, return [False] if there is no match.
+  ///target is the uuid of the person that is being liked.
+  Future<bool> like(String target) async {
+    Map<String,String> headers = {};
+    headers.addAll(_authHeader);
+    headers.addAll(_uuid);
+    headers.addAll({"content-type" : "application/json"});
+    var response = await http.post(
+        swipeUri,
+        body: jsonEncode(<String,String>
+        {
+          "target_uuid" : target,
+          "type" : "1",
+        }
+        ),
+        headers: headers
+    );
+
+    if(response.statusCode == 201){
+      //this means that there is a match created
+      print("Match created!");
+      return true;
+    }else if (response.statusCode == 202){
+      //this means that there is no match.
+      print("no match created");
+      return false;
+    } else {
+      print("Something's wrong");
+      print(response.body);
+      throw Exception("Error sending like information to the server.");
+    }
+  }
+
+  Future<void> dislike(String target) async {
+    Map<String,String> headers = {};
+    headers.addAll(_authHeader);
+    headers.addAll(_uuid);
+    headers.addAll({"content-type" : "application/json"});
+    var response = await http.post(
+        swipeUri,
+        body: jsonEncode(<String,String>
+        {
+          "target_uuid" : target,
+          "type" : "0",
+        }
+        ),
+        headers: headers
+    );
+
+    if(response.statusCode == 200){
+      //this means that there is a match created
+      print("dislike sent");
+    } else {
+      print("Something's wrong");
+      print(response.body);
+      throw Exception("Error sending dislike information to the server.");
+    }
+  }
+
+
+
 
   //helper functions
 
@@ -447,7 +510,7 @@ class PullRepository {
   Future<File> getFileFromURL(String presignedUrl) async {
     try{
 
-      print("trying to get image from presigned url: " + presignedUrl);
+      //print("trying to get image from presigned url: " + presignedUrl);
 
       //generate random number.
       var rng = new Random();

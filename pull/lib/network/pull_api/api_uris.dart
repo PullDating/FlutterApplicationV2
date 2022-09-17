@@ -22,3 +22,4 @@ final profilePhotoLimitsUri = Uri.parse('${_getBaseUrl()}/profile/photoLimits');
 final loginUri = Uri.parse('${_getBaseUrl()}/auth/login');
 final filterUri = Uri.parse('${_getBaseUrl()}/filter');
 final peopleUri = Uri.parse('${_getBaseUrl()}/people');
+final swipeUri = Uri.parse('${_getBaseUrl()}/swipe');

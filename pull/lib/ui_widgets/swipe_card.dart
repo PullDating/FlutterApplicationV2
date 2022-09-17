@@ -20,8 +20,8 @@ class PullSwipeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        print(constraints.maxHeight);
-        print(constraints.maxWidth);
+        //print(constraints.maxHeight);
+        //print(constraints.maxWidth);
         return SizedBox(
           height: constraints.maxHeight*0.80,
           width: constraints.maxWidth*0.80,
