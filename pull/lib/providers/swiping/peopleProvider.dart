@@ -23,8 +23,8 @@ class PeopleNotifier extends StateNotifier<List<Person>> {
     try {
       List<Person> values = await repo.getPeople(num);
       //need to do this for immutability so that it notifies.
-      List<Person> newlist = values;
-      newlist.addAll(state);
+      List<Person> newlist = state;
+      newlist.addAll(values);
       state = newlist;
       print(state);
       print("added people to the list of values.");
