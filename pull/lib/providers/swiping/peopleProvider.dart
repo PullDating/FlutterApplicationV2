@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pull/exceptions/empty_get_people_request.dart';
 import 'package:pull/models/person.dart';
-import 'package:pull/models/profile.dart';
 import 'package:pull/network/pull_api/repository.dart';
 import 'package:pull/providers/swiping/people_count_target.dart';
 
@@ -23,25 +22,35 @@ class PeopleNotifier extends StateNotifier<List<Person>> {
     //todo add a way to exclude the people that you already have in the stack in this request.
     try {
       List<Person> values = await repo.getPeople(num);
-      state.addAll(values);
+      //need to do this for immutability so that it notifies.
+      List<Person> newlist = values;
+      newlist.addAll(state);
+      state = newlist;
+      print(state);
       print("added people to the list of values.");
     } on EmptyGetPeopleException catch (e){
       print("no more people to get");
       //this is fine.
     }
+
+    print("new Length of people list: " + state.length.toString());
+
     int lengthAfter = state.length;
-    if(state.isEmpty || lengthAfter != lengthPrior + num){
+    if((state.isEmpty || lengthAfter != lengthPrior + num) && state.length<ref.read(peopleCountTargetProvider)){
       print("Couldn't find anyone, or couldn't find enough.");
       //this means that it failed the search, thus wait a delay
-      Timer(const Duration(seconds: 300), () {
+      Timer(const Duration(seconds: 30), () {
         print("Waiting because we ran out of people in the repo...");
         add(num);
       });
     }
+    print("returning from add call to people");
   }
   ///removes the first item from the list (the one the user swiped)
   Future<void> remove() async {
-    state.removeAt(0);
+    List<Person> temp = state;
+    temp.removeAt(0);
+    state = temp;
     if(state.isEmpty){
       //get more if you can.
       await add(ref.read(peopleCountTargetProvider));
@@ -51,6 +60,7 @@ class PeopleNotifier extends StateNotifier<List<Person>> {
   }
   ///resets the list (used when changing filters, for example)
   void reset(){
-    state = [];
+    List<Person> temp = [];
+    state = temp;
   }
 }
