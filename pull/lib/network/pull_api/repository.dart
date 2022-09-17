@@ -173,6 +173,7 @@ class PullRepository {
           bodyType: profile.bodyType,
           height: profile.height,
           biography: profile.biography,
+          images: profile.images,
         );
         returnList.add(person);
       }

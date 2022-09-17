@@ -29,7 +29,17 @@ class PullSwipeCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(12.0),
             child: Container(
               color: Colors.orange,
-              child: Text(person.uuid),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Text(person.uuid),
+                    Text(person.name),
+                    Text((person.biography != null)? person.biography! : " "),
+                    Image.file(person.images[0]!)
+                  ],
+                ),
+              ),
             ),
           ),
         );
