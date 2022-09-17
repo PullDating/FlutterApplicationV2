@@ -4,7 +4,9 @@ import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pull/exceptions/empty_get_people_request.dart';
 import 'package:pull/models/filter.dart';
+import 'package:pull/models/person.dart';
 import 'package:pull/models/profile.dart';
 import 'package:pull/network/pull_api/api_uris.dart';
 import 'package:pull/providers/max_profile_image_count.dart';
@@ -113,6 +115,73 @@ class PullRepository {
         images: images,
       );
       return profile;
+    } else {
+      print("Error trying to get filters.");
+      throw Exception("Error trying to get filters from server");
+    }
+  }
+
+  Future<List<Person>> getPeople(int number) async {
+    Map<String,String> headers = {};
+    headers.addAll(_authHeader);
+    headers.addAll(_uuid);
+    headers.addAll({"number" : number.toString()});
+
+    http.Response response = await http.get(peopleUri, headers: headers);
+
+    if(response.statusCode == 200){
+      print('valid response code');
+      print(jsonDecode(response.body));
+      var res = jsonDecode(response.body);
+      List<dynamic> result = res['returnList'];
+      print(result);
+      List<Person> returnList = [];
+      DateTime now = DateTime.now();
+
+
+      for (int i = 0; i < result.length; i++) {
+        print(result[i]);
+        var res = result[i];
+        Profile profile = await getProfile(res['uuid']);
+
+        int age;
+        try {
+          age = now
+              .difference(profile.birthdate)
+              .inDays ~/ 365;
+        } catch (e) {
+          print(e);
+          throw("age cast failed");
+        }
+
+        int distance;
+        try {
+          distance = (res['distance'] as double).toInt();
+        } catch(e){
+          print(e);
+          throw("distance cast failed");
+        }
+
+        //todo add the option to not have certain personal info displayed.
+        //convert the profile to a person object for display
+        Person person = Person(
+          uuid: profile.uuid,
+          age: age,
+          distance: distance,
+          name: profile.name,
+          gender: profile.gender,
+          bodyType: profile.bodyType,
+          height: profile.height,
+          biography: profile.biography,
+        );
+        returnList.add(person);
+      }
+
+      return returnList;
+    } else if (response.statusCode == 201){
+      //this means it could not find anyone.
+      //maybe throw a custom exception?
+      throw EmptyGetPeopleException();
     } else {
       print("Error trying to get filters.");
       throw Exception("Error trying to get filters from server");

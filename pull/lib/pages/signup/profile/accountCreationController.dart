@@ -74,8 +74,8 @@ class _AccountCreationControllerState extends ConsumerState<AccountCreationContr
         gender: ref.read(accountCreationGenderProvider)!,
         height: ref.read(accountCreationHeightProvider),
         images: ref.read(accountCreationPhotosProvider),
-        latitude: longitude,
-        longitude: latitude,
+        latitude: latitude,
+        longitude: longitude,
         name: ref.read(accountCreationNameProvider)!,
         uuid: ref.read(uuidProvider)!,
       );
