@@ -506,39 +506,38 @@ class PullRepository {
     }
     return images;
   }
+}
 
-  Future<File> getFileFromURL(String presignedUrl) async {
-    try{
+Future<File> getFileFromURL(String presignedUrl) async {
+  try{
 
-      //print("trying to get image from presigned url: " + presignedUrl);
+    //print("trying to get image from presigned url: " + presignedUrl);
 
-      //generate random number.
-      var rng = new Random();
+    //generate random number.
+    var rng = new Random();
 
-      //get temporary directory of device.
-      Directory tempDir = await getTemporaryDirectory();
+    //get temporary directory of device.
+    Directory tempDir = await getTemporaryDirectory();
 
-      //get temporary path from the temp directory
-      String tempPath = tempDir.path;
+    //get temporary path from the temp directory
+    String tempPath = tempDir.path;
 
-      //create a new file in temporary path with random file name.
-      File file = new File('$tempPath' + (rng.nextInt(100)).toString() + '.webp');
+    //create a new file in temporary path with random file name.
+    File file = new File('$tempPath' + (rng.nextInt(100)).toString() + '.webp');
 
-      //create uri from the presigned url
-      Uri imageUri = Uri.parse(presignedUrl);
+    //create uri from the presigned url
+    Uri imageUri = Uri.parse(presignedUrl);
 
-      //call http.get method and pass imageUrl into it to get respose.
-      http.Response response = await http.get(imageUri);
+    //call http.get method and pass imageUrl into it to get respose.
+    http.Response response = await http.get(imageUri);
 
-      //write the body bytes to file
-      await file.writeAsBytes(response.bodyBytes);
+    //write the body bytes to file
+    await file.writeAsBytes(response.bodyBytes);
 
-      //now return the file which is created with random name in temp location
-      return file;
-    } catch (e) {
-      print(e);
-      throw Exception("Couldn't get the file from the url given.");
-    }
+    //now return the file which is created with random name in temp location
+    return file;
+  } catch (e) {
+    print(e);
+    throw Exception("Couldn't get the file from the url given.");
   }
-
 }

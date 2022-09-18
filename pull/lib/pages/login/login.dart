@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
+import 'package:pull/developer/developer_provider_setup.dart';
 import 'package:pull/functions/firebase.dart';
+import 'package:pull/providers/developer_mode.dart';
 import 'package:pull/providers/login/firebase_verification_id.dart';
 import 'package:pull/providers/login/phone_number.dart';
 
@@ -108,6 +110,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 ElevatedButton(
                     onPressed: () => _loginPressed(),
                     child: const Text("Login")
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    ref.read(developerModeProvider.notifier).set(true);
+                    await setupDeveloperProviders(ref);
+                    context.go('/home');
+                  },
+                  child: const Text("enter developer mode"),
                 )
               ],
             ),
