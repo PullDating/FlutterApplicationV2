@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pull/providers/profile.dart';
 
 class ProfileOverviewPage extends ConsumerStatefulWidget {
@@ -53,7 +54,7 @@ class _ProfileOverviewPageState extends ConsumerState<ProfileOverviewPage> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  //todo add context.go to the correct route here
+                  context.go('/settings');
                 },
                 child: Icon(Icons.settings, color: Colors.white),
                 style: ElevatedButton.styleFrom(

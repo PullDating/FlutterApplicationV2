@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:pull/pages/home/home.dart';
+import 'package:pull/pages/home/settings/settings.dart';
 import 'package:pull/pages/login/one_time_password.dart';
 import 'package:pull/pages/signup/profile/accountCreationController.dart';
 import 'firebase_options.dart';
@@ -70,7 +71,16 @@ class PullApp extends ConsumerWidget {
       GoRoute(
           path: '/home',
           builder: (BuildContext context, GoRouterState state) {
-            return const HomePage(title: "pull",);
+            int index = 0;
+            print("Index in query: ${state.queryParams['index']}");
+            if(state.queryParams['index'] != null){
+              print("index was not null");
+              index = int.parse(state.queryParams['index']!);
+            } else {
+              print("index was null");
+              index = 0;
+            }
+            return HomePage(title: "pull",index: index,);
           }
       ),
 
@@ -79,6 +89,12 @@ class PullApp extends ConsumerWidget {
           builder: (BuildContext context, GoRouterState state) {
             return const AccountCreationController(title: "Create Account",);
           }
+      ),
+      GoRoute(
+        path: '/settings',
+        builder: (BuildContext context, GoRouterState state) {
+          return const SettingsPage();
+        }
       ),
     ]
   );

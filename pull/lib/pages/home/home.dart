@@ -13,9 +13,11 @@ class HomePage extends StatelessWidget {
   const HomePage({
     Key? key,
     required this.title,
+    required this.index,
   }) : super(key: key);
 
   final String title;
+  final int index;
 
   final List<Tab> navBarItems = const [
     Tab(icon: Icon(Icons.people_outline_sharp),),
@@ -27,6 +29,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return DefaultTabController(
+      initialIndex: index,
       length: navBarItems.length,
       child: Scaffold(
         appBar: AppBar(

@@ -6,8 +6,8 @@ import 'package:pull/models/person.dart';
 import 'package:pull/models/pullmatch.dart';
 import 'package:pull/providers/match_list.dart';
 import 'package:pull/providers/max_concurrent_matches.dart';
-import 'package:pull/ui_widgets/report_dialogue.dart';
-import 'package:pull/ui_widgets/unmatch_dialogue.dart';
+import 'package:pull/ui_widgets/alert_dialogues/report_dialogue.dart';
+import 'package:pull/ui_widgets/alert_dialogues/unmatch_dialogue.dart';
 
 class MatchListPage extends ConsumerStatefulWidget {
   const MatchListPage({Key? key}) : super(key: key);

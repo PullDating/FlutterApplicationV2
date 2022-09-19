@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pull/providers/paused.dart';
+import 'package:pull/ui_widgets/alert_dialogues/delete_account_dialogue.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
@@ -15,6 +18,14 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Settings"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              context.go('/home?index=2');
+            },
+          )
+        ],
       ),
       body: ListView(
         children: [
@@ -23,6 +34,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               'Github',
               style: Theme.of(context).textTheme.headline5,
             ),
+
             onTap: () {
               launchUrl(
                 Uri.parse('https://github.com/PullDating/FlutterApplicationV2'),
@@ -53,6 +65,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               'Pause',
               style: Theme.of(context).textTheme.headline5,
             ),
+            subtitle: (ref.read(accountPausedProvider)) ? Text("Account currently paused.") : Text("Account currently unpaused."),
             onTap: () async {
               //todo add the logic to call backend request here.
             },
@@ -73,6 +86,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
             ),
             onTap: () async {
               //todo add the logic to call backend request here.
+              showDialog(context: context, builder: (context){
+                return DeleteAccountDialogue();
+              });
             },
           )
         ],

@@ -16,6 +16,7 @@ import 'package:pull/providers/match_list.dart';
 import 'package:pull/providers/max_concurrent_matches.dart';
 import 'package:pull/providers/network/auth_token.dart';
 import 'package:pull/providers/network/uuid.dart';
+import 'package:pull/providers/paused.dart';
 import 'package:pull/providers/profile.dart';
 import 'package:pull/providers/swiping/peopleProvider.dart';
 
@@ -24,10 +25,14 @@ Future<void> setupDeveloperProviders (WidgetRef ref) async {
 
 
 
+
   print("Setting the uuid and auth token providers");
   //set the uuid provider and auth token providers
   ref.read(uuidProvider.notifier).set("not a real uuid");
   ref.read(authTokenProvider.notifier).set("not a real auth token");
+
+  //set account paused provider
+  ref.read(accountPausedProvider.notifier).set(false);
 
   print("attempint to get user profile images");
   List<File> userprofileimages = [

@@ -30,6 +30,7 @@ setupUserProviders(WidgetRef ref) async {
   Profile profile = await repo.getProfile(null);
   ref.read(profileProvider.notifier).set(profile);
 
+  //todo add the logic to get the accountPausedProvider from the api.
 
   //todo add the logic to get the list of their matches
 
