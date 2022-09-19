@@ -28,16 +28,33 @@ class PullSwipeCard extends StatelessWidget {
     List<Widget> displayWidgets = [];
     //first photo in the display
     if(person.images.length >= 1){
-      displayWidgets.add(Image.file(person.images[0]!));
+      displayWidgets.add(Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12.0),
+          child: Image.file(person.images[0]!),
+        ),
+      ));
     }
     if(person.biography != null){
       displayWidgets.add(Card(
-        child: Text(person.biography!),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(person.biography!),
+        ),
       ));
     }
     //add the rest of the images
     for(int i = 1; i < person.images.length; i++){
-      displayWidgets.add(Image.file(person.images[i]!));
+      displayWidgets.add(
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12.0), 
+              child: Image.file(person.images[i]!)
+            ),
+          )
+      );
     }
 
 
@@ -48,21 +65,36 @@ class PullSwipeCard extends StatelessWidget {
         return SizedBox(
           height: constraints.maxHeight*0.80,
           width: constraints.maxWidth*0.80,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(12.0),
-            child: Container(
-              color: Colors.orange,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Stack(
-                  children: [
-                    ListView(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(1.00),
+                  spreadRadius: 7,
+                  blurRadius: 10,
+                  offset: const Offset(0,0),
+                ),
+              ]
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12.0),
+                    child: ListView(
                       children: displayWidgets,
                     ),
-                    Text(person.uuid),
-                    Text(person.name),
-                  ],
-                ),
+                  ),
+                  Row(
+                    children: [
+                      Text(person.uuid),
+                      Text(person.name),
+                    ],
+                  )
+                ],
               ),
             ),
           ),

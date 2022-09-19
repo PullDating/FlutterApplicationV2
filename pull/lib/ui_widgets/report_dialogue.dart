@@ -1,38 +1,38 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class UnmatchDialogue extends StatelessWidget {
-  const UnmatchDialogue({Key? key}) : super(key: key);
+class ReportDialogue extends StatelessWidget {
+  const ReportDialogue({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CupertinoAlertDialog(
       title: Row(
         children: [
-          Text("Why did you unmatch?")
+          Text("What justified this report?")
         ],
       ),
       content: Column(
         children: [
-          Text("This allows us to curate the pool of people better for you, and everyone else.")
+          Text("Note that this is only for serious offences. If it is simply a matter of preference, please unmatch instead. We take user reports seriously and use them to filter out scammers and predatory users.")
         ],
       ),
       actions: [
         TextButton(
           onPressed: () {  },
-          child: Text("Boring"),
+          child: Text("Scam/Fraud"),
         ),
         TextButton(
           onPressed: () {  },
-          child: Text("Overly Sexual"),
+          child: Text("Catfishing"),
         ),
         TextButton(
           onPressed: () {  },
-          child: Text("Too Fast"),
+          child: Text("Harassment"),
         ),
         TextButton(
           onPressed: () {  },
-          child: Text("Ghosting"),
+          child: Text("Criminal activity"),
         ),
       ],
 

@@ -9,6 +9,7 @@ import 'package:pull/models/filter.dart';
 import 'package:pull/models/person.dart';
 import 'package:pull/models/profile.dart';
 import 'package:pull/network/pull_api/api_uris.dart';
+import 'package:pull/providers/developer_mode.dart';
 import 'package:pull/providers/max_profile_image_count.dart';
 import 'package:pull/providers/min_profile_image_count.dart';
 import 'package:pull/providers/network/auth_token.dart';
@@ -431,59 +432,70 @@ class PullRepository {
   ///return [True] if there is a match, return [False] if there is no match.
   ///target is the uuid of the person that is being liked.
   Future<bool> like(String target) async {
-    Map<String,String> headers = {};
-    headers.addAll(_authHeader);
-    headers.addAll(_uuid);
-    headers.addAll({"content-type" : "application/json"});
-    var response = await http.post(
-        swipeUri,
-        body: jsonEncode(<String,String>
-        {
-          "target_uuid" : target,
-          "type" : "1",
-        }
-        ),
-        headers: headers
-    );
+    if (! _read(developerModeProvider)){
+      Map<String, String> headers = {};
+      headers.addAll(_authHeader);
+      headers.addAll(_uuid);
+      headers.addAll({"content-type": "application/json"});
+      var response = await http.post(
+          swipeUri,
+          body: jsonEncode(<String, String>
+          {
+            "target_uuid": target,
+            "type": "1",
+          }
+          ),
+          headers: headers
+      );
 
-    if(response.statusCode == 201){
-      //this means that there is a match created
-      print("Match created!");
-      return true;
-    }else if (response.statusCode == 202){
-      //this means that there is no match.
-      print("no match created");
-      return false;
+      if (response.statusCode == 201) {
+        //this means that there is a match created
+        print("Match created!");
+        return true;
+      } else if (response.statusCode == 202) {
+        //this means that there is no match.
+        print("no match created");
+        return false;
+      } else {
+        print("Something's wrong");
+        print(response.body);
+        throw Exception("Error sending like information to the server.");
+      }
     } else {
-      print("Something's wrong");
-      print(response.body);
-      throw Exception("Error sending like information to the server.");
+      print("developer like");
+      return false;
     }
+
   }
 
   Future<void> dislike(String target) async {
-    Map<String,String> headers = {};
-    headers.addAll(_authHeader);
-    headers.addAll(_uuid);
-    headers.addAll({"content-type" : "application/json"});
-    var response = await http.post(
-        swipeUri,
-        body: jsonEncode(<String,String>
-        {
-          "target_uuid" : target,
-          "type" : "0",
-        }
-        ),
-        headers: headers
-    );
 
-    if(response.statusCode == 200){
-      //this means that there is a match created
-      print("dislike sent");
+    if(!_read(developerModeProvider)) {
+      Map<String, String> headers = {};
+      headers.addAll(_authHeader);
+      headers.addAll(_uuid);
+      headers.addAll({"content-type": "application/json"});
+      var response = await http.post(
+          swipeUri,
+          body: jsonEncode(<String, String>
+          {
+            "target_uuid": target,
+            "type": "0",
+          }
+          ),
+          headers: headers
+      );
+
+      if (response.statusCode == 200) {
+        //this means that there is a match created
+        print("dislike sent");
+      } else {
+        print("Something's wrong");
+        print(response.body);
+        throw Exception("Error sending dislike information to the server.");
+      }
     } else {
-      print("Something's wrong");
-      print(response.body);
-      throw Exception("Error sending dislike information to the server.");
+      print("developer dislike");
     }
   }
 

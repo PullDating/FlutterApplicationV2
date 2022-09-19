@@ -70,21 +70,39 @@ Future<void> setupDeveloperProviders (WidgetRef ref) async {
   print("done the developer provider setup.");
 }
 
+List<String> sample_biographies = [
+  "I’m a sucker for love – I believe in love and I’m looking for my soulmate.",
+  "I’m an independent woman – I am also strong and independent, and I don’t need anyone to take care of me.",
+  "I’m a hopeless romantic, and I’m also looking for my fairytale ending.",
+  "Travelling, adventures, extreme sports are also a vital part of me, but I like flattering and watching them rather than doing it?",
+  "I love to laugh, and I’m also looking for someone who can make me laugh.",
+  "Karaoke is my jam, and I’m looking for someone to sing duets with.",
+  "I’m a little bit country, and I’m a little bit rock and roll.",
+  "Do you like piña coladas? Getting caught in the rain? If so, we might just be the perfect match.",
+  "I’m looking for someone to share my entire life with.",
+  "Message me your best pick up line.",
+  "Do not message me if you are not prepared for some serious sass.",
+  "I’m looking for someone who can handle my sarcasm.",
+];
+
 Future<Person> generateRandomProfile(String uuid) async {
   var rng = Random();
   //generate a list of images
   List<File> sample_images = [];
-  for(int j = 0; j < 5; j++){
+  for(int j = 0; j < 3; j++){
     //generate a random image and append it to the list
     sample_images.add(await getFileFromURL(dev_image_urls[rng.nextInt(dev_image_urls.length)]));
   }
 
+  String bio = sample_biographies[rng.nextInt(sample_biographies.length)];
+
   Person newperson = Person(
-  uuid: uuid,
-  age: (18 + rng.nextInt(40 - 18)).toInt(),
-  distance: (rng.nextInt(50)),
-  name: sample_names[rng.nextInt(sample_names.length)],
-  images: sample_images
+    uuid: uuid,
+    age: (18 + rng.nextInt(40 - 18)).toInt(),
+    distance: (rng.nextInt(50)),
+    name: sample_names[rng.nextInt(sample_names.length)],
+    images: sample_images,
+    biography: bio,
   );
 
   return newperson;

@@ -4,6 +4,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pull/models/person.dart';
 import 'package:pull/models/pullmatch.dart';
 import 'package:pull/providers/match_list.dart';
+import 'package:pull/ui_widgets/report_dialogue.dart';
+import 'package:pull/ui_widgets/unmatch_dialogue.dart';
 
 class MatchListPage extends ConsumerStatefulWidget {
   const MatchListPage({Key? key}) : super(key: key);
@@ -54,14 +56,24 @@ class MatchListItem extends StatelessWidget {
               //dismissible: DismissiblePane(onDismissed: () {},),
               children: [
                 SlidableAction(
-                  onPressed: (context) => (){},
+                  onPressed: (context){
+                    showDialog(context: context, builder: (BuildContext context) {
+                      return UnmatchDialogue(
+
+                      );
+                    });
+                  },
                   backgroundColor: Colors.orange,
                   foregroundColor: Colors.white,
                   icon: Icons.delete,
                   label: "Unmatch",
                 ),
                 SlidableAction(
-                  onPressed: (context) => (){},
+                  onPressed: (context){
+                    showDialog(context: context, builder: (BuildContext context) {
+                      return ReportDialogue();
+                    });
+                  },
                   backgroundColor: Colors.red,
                   foregroundColor: Colors.white,
                   icon: Icons.flag,
