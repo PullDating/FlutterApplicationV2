@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pull/models/person.dart';
 import 'package:pull/models/profile.dart';
 import 'package:pull/network/pull_api/repository.dart';
+import 'package:pull/providers/match_list.dart';
+import 'package:pull/providers/max_concurrent_matches.dart';
 import 'package:pull/providers/swiping/peopleProvider.dart';
 import 'package:pull/providers/swiping/people_count_target.dart';
 import 'package:pull/ui_widgets/swipe_card.dart';
@@ -84,7 +86,7 @@ class _SwipingPageState extends ConsumerState<SwipingPage> {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: (peopleList.isNotEmpty)? SwipableStack(
+      child:(ref.read(matchListProvider).length < ref.read(maxConcurrentMatchesProvider))? (peopleList.isNotEmpty)? SwipableStack(
         hitTestBehavior: HitTestBehavior.deferToChild,
         controller: _controller,
         stackClipBehaviour: Clip.none,
@@ -108,6 +110,19 @@ class _SwipingPageState extends ConsumerState<SwipingPage> {
       ) : Container(
         child: Center(
           child: CircularProgressIndicator(),
+        ),
+      ) : Container(
+        //if they already have the max number of concurrent matches
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("You are out of available match slots. To keep swiping, you must first unmatch one of your existing matches. However, we recommend you give them a fair shot before moving on!"),
+              ],
+            ),
+          ),
         ),
       ),
     );

@@ -1,9 +1,11 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pull/models/person.dart';
 import 'package:pull/models/pullmatch.dart';
 import 'package:pull/providers/match_list.dart';
+import 'package:pull/providers/max_concurrent_matches.dart';
 import 'package:pull/ui_widgets/report_dialogue.dart';
 import 'package:pull/ui_widgets/unmatch_dialogue.dart';
 
@@ -21,11 +23,14 @@ class _MatchListState extends ConsumerState<MatchListPage> {
 
     List<PullMatch> matchList = ref.watch(matchListProvider);
     print("length of match list: ${matchList.length}");
-    List<MatchListItem> displayList = [];
+    List<Widget> displayList = [];
     for(int i = 0; i < matchList.length; i++){
       displayList.add(MatchListItem(
         match: matchList[i],
       ));
+    }
+    for(int i = matchList.length; i < ref.read(maxConcurrentMatchesProvider); i++){
+      displayList.add(EmptyMatchListItem());
     }
     return Column(
       children: displayList,
@@ -113,6 +118,43 @@ class MatchListItem extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class EmptyMatchListItem extends StatelessWidget {
+  const EmptyMatchListItem({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: DottedBorder(
+            strokeWidth: 2,
+            dashPattern: [6, 6],
+            color: Colors.lightBlueAccent,
+            borderType: BorderType.RRect,
+            radius: const Radius.circular(12.0),
+            child: SizedBox(
+              height: 60,
+              width: constraints.maxWidth,
+              child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    child: Text("This is an empty slot, you can go find another match if you'd like."),
+                  ),
+                ),
+              ),
+            )
+          ),
+        );
+      }
     );
   }
 }
