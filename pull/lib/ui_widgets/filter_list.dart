@@ -6,6 +6,8 @@ import 'package:pull/providers/filters/age_min.dart';
 import 'package:pull/providers/filters/distance_max.dart';
 import 'package:pull/providers/filters/height_max.dart';
 import 'package:pull/providers/filters/height_min.dart';
+import 'package:pull/providers/filters/valid_bodyTypes.dart';
+import 'package:pull/providers/filters/valid_genders.dart';
 import 'package:pull/providers/unit_system.dart';
 import 'package:pull/ui_widgets/toggle_button.dart';
 import 'package:pull/ui_widgets/unit_toggle.dart';
@@ -45,6 +47,46 @@ class FilterList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    // // this stuff was for adapting the filters to use the valid values from the
+    // // providers, however this would require changing the way the Filters models
+    // // is structure, so that dating goal, gender etc would be lists instead of individual
+    // // boolean values.
+    // List<Widget> genderItems = [];
+    // List<Widget> bodyTypeItems = [];
+    //
+    // //for each body type, append the relevant toggle button to the list
+    // for(int i = 0; i < ref.read(validBodyTypesProvider).length; i++){
+    //   bodyTypeItems.add(SizedBox(
+    //     height: 30,
+    //     child: FittedBox(
+    //       fit: BoxFit.fitHeight,
+    //       child: PullToggleButton(
+    //         onToggle: bodyTypeChecked(ref.read(validBodyTypesProvider)[i].item1),
+    //         pressed: (displayFilter.bt),
+    //         text: ref.read(validBodyTypesProvider)[i].item2,
+    //       ),
+    //     ),
+    //   ),);
+    // }
+    //
+    // //do the same for genders.
+    // for(int i = 0; i < ref.read(validGendersProvider).length; i++){
+    //   genderItems.add(SizedBox(
+    //     height: 30,
+    //     child: FittedBox(
+    //       fit: BoxFit.fitHeight,
+    //       child: PullToggleButton(
+    //         onToggle: genderChecked(ref.read(validGendersProvider)[i].item1),
+    //         pressed: (displayFilter.genderMan),
+    //         text: ref.read(validGendersProvider)[i].item2,
+    //       ),
+    //     ),
+    //   ),);
+    // }
+
+    //todo modify this to use the providers for the valid values providers.
+
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       return Column(

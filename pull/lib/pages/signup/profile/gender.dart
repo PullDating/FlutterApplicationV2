@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pull/providers/account_setup/gender.dart';
+import 'package:pull/providers/filters/valid_genders.dart';
+import 'package:tuple/tuple.dart';
 
 class GenderPage extends ConsumerStatefulWidget {
   const GenderPage({Key? key}) : super(key: key);
@@ -30,34 +32,25 @@ class _GenderPageState extends ConsumerState<GenderPage> {
 
     String? gender = ref.watch(accountCreationGenderProvider);
 
+    List<Tuple2<String,String>> validInputs = ref.watch(validGendersProvider);
+
+    List<Widget> radioTiles = [];
+    for(int i = 0; i < validInputs.length; i++){
+      radioTiles.add(
+          RadioListTile<String>(
+            title: Text(validInputs[i].item2),
+            value: validInputs[i].item1,
+            groupValue: gender,
+            onChanged: (String? value) {
+              changeRadioButton(value);
+            },
+          )
+      );
+    }
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        RadioListTile<String>(
-          title: const Text('Man'),
-          value: 'man',
-          groupValue: gender,
-          onChanged: (String? value) {
-            changeRadioButton(value);
-          },
-        ),
-        RadioListTile<String>(
-          title: const Text('Woman'),
-          value: 'woman',
-          groupValue: gender,
-          onChanged: (String? value) {
-            changeRadioButton(value);
-          },
-        ),
-        RadioListTile<String>(
-          title: const Text('Non-Binary'),
-          value: 'non-binary',
-          groupValue: gender,
-          onChanged: (String? value) {
-            changeRadioButton(value);
-          },
-        ),
-      ],
+      children: radioTiles,
     );
   }
 }

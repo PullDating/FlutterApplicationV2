@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:pull/pages/home/home.dart';
+import 'package:pull/pages/home/settings/edit_profile.dart';
 import 'package:pull/pages/home/settings/settings.dart';
 import 'package:pull/pages/login/one_time_password.dart';
 import 'package:pull/pages/signup/profile/accountCreationController.dart';
@@ -91,10 +92,16 @@ class PullApp extends ConsumerWidget {
           }
       ),
       GoRoute(
-        path: '/settings',
-        builder: (BuildContext context, GoRouterState state) {
-          return const SettingsPage();
-        }
+          path: '/settings',
+          builder: (BuildContext context, GoRouterState state) {
+            return const SettingsPage();
+          }
+      ),
+      GoRoute(
+          path: '/editProfile',
+          builder: (BuildContext context, GoRouterState state) {
+            return const EditProfilePage();
+          }
       ),
     ]
   );

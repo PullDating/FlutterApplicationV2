@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pull/providers/account_setup/dating_goal.dart';
+import 'package:pull/providers/filters/valid_datingGoals.dart';
+import 'package:pull/providers/filters/valid_genders.dart';
+import 'package:tuple/tuple.dart';
 
 class DatingGoalPage extends ConsumerStatefulWidget {
   const DatingGoalPage({Key? key}) : super(key: key);
@@ -30,59 +33,26 @@ class _ProfileDatingGoalFieldState extends ConsumerState<DatingGoalPage> {
 
     String? datinggoal = ref.watch(accountCreationDatingGoalProvider);
 
+    List<Tuple2<String,String>> validInputs = ref.watch(validDatingGoalsProvider);
+
+    List<Widget> radioTiles = [];
+    for(int i = 0; i < validInputs.length; i++){
+      radioTiles.add(
+          RadioListTile<String>(
+            title: Text(validInputs[i].item2),
+            value: validInputs[i].item1,
+            groupValue: datinggoal,
+            onChanged: (String? value) {
+              changeRadioButton(value);
+            },
+          )
+      );
+    }
+
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          RadioListTile<String>(
-            title: const Text('Marriage'),
-            value: 'marriage',
-            groupValue: datinggoal,
-            onChanged: (String? value) {
-              changeRadioButton(value);
-            },
-          ),
-          RadioListTile<String>(
-            title: const Text('Long-term Relationship'),
-            value: 'longterm',
-            groupValue: datinggoal,
-            onChanged: (String? value) {
-              changeRadioButton(value);
-            },
-          ),
-          RadioListTile<String>(
-            title: const Text('Short-term Relationship'),
-            value: 'shortterm',
-            groupValue: datinggoal,
-            onChanged: (String? value) {
-              changeRadioButton(value);
-            },
-          ),
-          RadioListTile<String>(
-            title: const Text('Hookup'),
-            value: 'hookup',
-            groupValue: datinggoal,
-            onChanged: (String? value) {
-              changeRadioButton(value);
-            },
-          ),
-          RadioListTile<String>(
-            title: const Text('Just Chatting'),
-            value: 'justchatting',
-            groupValue: datinggoal,
-            onChanged: (String? value) {
-              changeRadioButton(value);
-            },
-          ),
-          RadioListTile<String>(
-            title: const Text('Figuring out what I want'),
-            value: 'unsure',
-            groupValue: datinggoal,
-            onChanged: (String? value) {
-              changeRadioButton(value);
-            },
-          ),
-        ],
+        children: radioTiles,
       ),
     );
   }

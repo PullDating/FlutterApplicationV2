@@ -36,7 +36,7 @@ class _ProfileOverviewPageState extends ConsumerState<ProfileOverviewPage> {
                 right: 0,
                 child: ElevatedButton(
                   onPressed: () {
-                    //todo add correct to the edit profile page.
+                    context.go('/editProfile');
                   },
                   child: Icon(Icons.edit, color: Colors.white),
                   style: ElevatedButton.styleFrom(
