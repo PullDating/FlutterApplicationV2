@@ -18,7 +18,6 @@ import 'package:pull/providers/filters/valid_genders.dart';
 import 'package:pull/providers/max_biography_characters.dart';
 import 'package:pull/providers/max_profile_image_count.dart';
 import 'package:pull/providers/min_profile_image_count.dart';
-import 'package:pull/providers/network/uuid.dart';
 import 'package:pull/providers/profile.dart';
 import 'package:pull/ui_widgets/filter_list.dart';
 import 'package:pull/ui_widgets/swipe_card.dart';
@@ -35,15 +34,15 @@ class EditProfilePage extends ConsumerStatefulWidget {
 class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   late Profile profile;
 
+  late TextEditingController biographyController = TextEditingController();
+
   /// Stores the reordering information for the profile update call.
   /// The key is the new position in the update photo list.
   /// The value is the old position from the photo list
   /// If the old value is -1 that means that it is a newly updated photo.
   late List<int> reorderPhotos;
 
-  late List<bool> datingGoalChecked = [];
-  late List<bool> bodyTypeChecked = [];
-  late List<bool> genderChecked = [];
+  //contains the list of valid options that they can have.
   late List<String> bodyTypeOptionNames = [];
   late List<String> genderOptionNames = [];
   late List<String> datingGoalOptionNames = [];
@@ -52,97 +51,33 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   void initState() {
     super.initState();
 
-    profile = ref.read(profileProvider)!;
-    print("got profile");
-    biographyMaxCharacters = ref.read(maxBiographyLengthProvider);
-    print("got biography limit");
+    profile = ref.read(profileProvider)!.copyWith();
+
     //set the option names for display.
     //bodytype options
-    for(int i = 0 ; i < ref.read(validBodyTypesProvider).length; i++){
+    for (int i = 0; i < ref.read(validBodyTypesProvider).length; i++) {
       bodyTypeOptionNames.add(ref.read(validBodyTypesProvider)[i].item2);
     }
 
-
-
     //gender
-    for(int i = 0 ; i < ref.read(validGendersProvider).length; i++){
+    for (int i = 0; i < ref.read(validGendersProvider).length; i++) {
       genderOptionNames.add(ref.read(validGendersProvider)[i].item2);
     }
+
     //dating goal
-    for(int i = 0 ; i < ref.read(validDatingGoalsProvider).length; i++){
+    for (int i = 0; i < ref.read(validDatingGoalsProvider).length; i++) {
       datingGoalOptionNames.add(ref.read(validDatingGoalsProvider)[i].item2);
     }
 
-    print("added the limits for dating goal, gender, and body type");
+    biographyController.text =
+    (profile.biography == null) ? '' : profile.biography;
 
-
-    _initialize();
-  }
-
-  ///the uuid of the user in question, not really needed for this one.
-  late String? uuid;
-
-  //get the information from the database, and write it to profile.
-  Future<void> _initialize() async {
-    print("entered initialize function");
-
-    uuid = ref.read(uuidProvider);
-    print('starting initialize');
-    if(uuid == null){
-      throw Exception("uuid returned null");
-    }
-    print("done getting uuid: ${uuid}");
-
-    //TODO save the initial reorder, add, and delete maps for later api use.
-
-    //TODO fix this function, it is not getting the accurate values from the database, just the old values.
-
-    try {
-      setState((){
-        biographyController.text = (profile.biography == null)? '' : profile.biography;
-
-        //for the other settings, need to set the correct starting values.
-        //dating goal
-        for(int i = 0; i < ref.read(validDatingGoalsProvider).length; i++){
-          if(ref.read(validDatingGoalsProvider)[i].item1 == profile.datingGoal){
-            datingGoalChecked.add(true);
-          } else {
-            datingGoalChecked.add(false);
-          }
-        }
-
-        //gender
-        for(int i = 0; i < ref.read(validGendersProvider).length; i++){
-          if(ref.read(validGendersProvider)[i].item1 == profile.gender){
-            genderChecked.add(true);
-          } else {
-            genderChecked.add(false);
-          }
-        }
-
-        //body type
-        for(int i = 0; i < ref.read(validBodyTypesProvider).length; i++){
-          if(ref.read(validBodyTypesProvider)[i].item1 == profile.bodyType){
-            bodyTypeChecked.add(true);
-          } else {
-            bodyTypeChecked.add(false);
-          }
-        }
-      });
-
-      //Set the reorder photos to what is already in the database.
-      reorderPhotos = [];
-      for(int i = 0; i < profile.images.length; i++){
-        reorderPhotos.add(i);
-      }
-    } catch (e) {
-      print("Failed to initialize.");
-      print(e);
-      //return empty objects.
+    reorderPhotos = [];
+    for (int i = 0; i < profile.images.length; i++) {
+      reorderPhotos.add(i);
     }
   }
 
-  //todo implement submit
   //they it should update the database, and then navigate back to /home/profile.
   Future<void> submit() async {
 
@@ -175,6 +110,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
     } else {
       //if in developer mode.
       print("submit pressed");
+
       context.go('/home?index=2');
     }
   }
@@ -191,7 +127,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
         print("cannot move an empty image tile.");
         return;
       }
-      List<File?> tempImages = profile.images;
+      List<File?> tempImages = List.from(profile.images);
       File? temp = tempImages[oldIndex];
       //remove at the old index
       tempImages.removeAt(oldIndex);
@@ -206,7 +142,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
       reorderPhotos.insert(newIndex, reorderTemp);
 
       //set the profile's images to the rearranged images.
-      profile.images = tempImages;
+      profile = profile.copyWith(images: tempImages);
 
       //handle the update to reorder photos
       //It should get the new old location from the previous old location
@@ -226,7 +162,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
       }
 
       //store a temporary list while the rearranging is done, as well as some temp variables.
-      List<File?> tempimages = profile.images;
+      List<File?> tempimages = List.from(profile.images);
 
       //check to make sure that is is within the valid range of indexes.
       if(index < ref.read(maxProfileImageCountProvider) && index >= 0){
@@ -266,7 +202,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   _deletePhoto(int index) {
     print("_deletePhoto pressed");
     setState((){
-      List<File?> tempimages = profile.images;
+      List<File?> tempimages = List.from(profile.images);
       tempimages.removeAt(index);
       reorderPhotos.removeAt(index);
 
@@ -284,26 +220,56 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   _datingGoalPressed(int index){
     print("dating goal pressed with index: ${index}");
     setState(() {
-
+      profile = profile.copyWith(datingGoal: ref.read(validDatingGoalsProvider)[index].item1);
     });
   }
+
   _bodyTypePressed(int index){
     print("bodyType pressed with index: ${index}");
     setState(() {
+      profile = profile.copyWith(bodyType: ref.read(validBodyTypesProvider)[index].item1);
     });
   }
+
   _genderPressed(int index){
     print("gender pressed with index: ${index}");
     setState(() {
+      profile = profile.copyWith(gender: ref.read(validGendersProvider)[index].item1);
     });
   }
 
-  TextEditingController biographyController = TextEditingController();
-  //TODO get this from the backend/providers.
-  late int biographyMaxCharacters;
-
   @override
   Widget build(BuildContext context) {
+    //contains a list of the strings that are selected by the user
+    List<bool> datingGoalChecked = [];
+    List<bool> bodyTypeChecked = [];
+    List<bool> genderChecked = [];
+
+    for(int i = 0 ; i < ref.read(validBodyTypesProvider).length; i++){
+      if(ref.read(validBodyTypesProvider)[i].item1 == profile.bodyType){
+        bodyTypeChecked.add(true);
+      } else {
+        bodyTypeChecked.add(false);
+      }
+    }
+
+    //gender
+    for(int i = 0 ; i < ref.read(validGendersProvider).length; i++){
+      if(ref.read(validGendersProvider)[i].item1 == profile.gender){
+        genderChecked.add(true);
+      } else {
+        genderChecked.add(false);
+      }
+    }
+
+    //dating goal
+    for(int i = 0 ; i < ref.read(validDatingGoalsProvider).length; i++){
+      if(ref.read(validDatingGoalsProvider)[i].item1 == profile.datingGoal){
+        datingGoalChecked.add(true);
+      } else {
+        datingGoalChecked.add(false);
+      }
+    }
 
     //construct a person to show on the display part from the profile
     int age;
@@ -404,7 +370,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                 ),
                 //this contains the update two tabs and all the logic
                 Container(
-                  height: availableHeight * 0.9,
+                  height: availableHeight * 0.95,
                   child: TabBarView(
                     children: [
                       //edit
@@ -418,7 +384,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                             ),
                             //edit biography
                             BiographyBox(
-                              maxCharacters: biographyMaxCharacters,
+                              maxCharacters: ref.read(maxBiographyLengthProvider),
                               controller: biographyController,
                             ),
                             //edit dating goals
@@ -461,7 +427,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
 
                       //preview
                       Container(
-                        color: Colors.grey,
+                        color: Colors.white,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -479,7 +445,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                 //this serves as a bottom app bar for saving or cancelling.
                 Container(
                   color: Colors.lightBlueAccent,
-                  height: availableHeight * 0.1,
+                  height: availableHeight * 0.05,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

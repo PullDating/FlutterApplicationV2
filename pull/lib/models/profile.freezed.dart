@@ -17,30 +17,17 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Profile {
 //the unique identifier of the user, used for backend api calls
-  String get uuid =>
-      throw _privateConstructorUsedError; //the unique identifier of the user, used for backend api calls
-  set uuid(String value) => throw _privateConstructorUsedError;
+  String get uuid => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  set name(String value) => throw _privateConstructorUsedError;
   DateTime get birthdate => throw _privateConstructorUsedError;
-  set birthdate(DateTime value) => throw _privateConstructorUsedError;
   String get bodyType => throw _privateConstructorUsedError;
-  set bodyType(String value) => throw _privateConstructorUsedError;
   String get gender => throw _privateConstructorUsedError;
-  set gender(String value) => throw _privateConstructorUsedError;
   int get height => throw _privateConstructorUsedError;
-  set height(int value) => throw _privateConstructorUsedError;
   String get datingGoal => throw _privateConstructorUsedError;
-  set datingGoal(String value) => throw _privateConstructorUsedError;
   String get biography => throw _privateConstructorUsedError;
-  set biography(String value) => throw _privateConstructorUsedError;
   double get latitude => throw _privateConstructorUsedError;
-  set latitude(double value) => throw _privateConstructorUsedError;
-  double get longitude => throw _privateConstructorUsedError;
-  set longitude(double value) =>
-      throw _privateConstructorUsedError; //for images
-  List<File?> get images => throw _privateConstructorUsedError; //for images
-  set images(List<File?> value) => throw _privateConstructorUsedError;
+  double get longitude => throw _privateConstructorUsedError; //for images
+  List<File?> get images => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProfileCopyWith<Profile> get copyWith => throw _privateConstructorUsedError;
@@ -220,7 +207,7 @@ class __$$_ProfileCopyWithImpl<$Res> extends _$ProfileCopyWithImpl<$Res>
           : longitude // ignore: cast_nullable_to_non_nullable
               as double,
       images: images == freezed
-          ? _value.images
+          ? _value._images
           : images // ignore: cast_nullable_to_non_nullable
               as List<File?>,
     ));
@@ -241,32 +228,38 @@ class _$_Profile with DiagnosticableTreeMixin implements _Profile {
       required this.biography,
       required this.latitude,
       required this.longitude,
-      required this.images});
+      required final List<File?> images})
+      : _images = images;
 
 //the unique identifier of the user, used for backend api calls
   @override
-  String uuid;
+  final String uuid;
   @override
-  String name;
+  final String name;
   @override
-  DateTime birthdate;
+  final DateTime birthdate;
   @override
-  String bodyType;
+  final String bodyType;
   @override
-  String gender;
+  final String gender;
   @override
-  int height;
+  final int height;
   @override
-  String datingGoal;
+  final String datingGoal;
   @override
-  String biography;
+  final String biography;
   @override
-  double latitude;
+  final double latitude;
   @override
-  double longitude;
+  final double longitude;
+//for images
+  final List<File?> _images;
 //for images
   @override
-  List<File?> images;
+  List<File?> get images {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_images);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -291,6 +284,40 @@ class _$_Profile with DiagnosticableTreeMixin implements _Profile {
       ..add(DiagnosticsProperty('images', images));
   }
 
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Profile &&
+            const DeepCollectionEquality().equals(other.uuid, uuid) &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.birthdate, birthdate) &&
+            const DeepCollectionEquality().equals(other.bodyType, bodyType) &&
+            const DeepCollectionEquality().equals(other.gender, gender) &&
+            const DeepCollectionEquality().equals(other.height, height) &&
+            const DeepCollectionEquality()
+                .equals(other.datingGoal, datingGoal) &&
+            const DeepCollectionEquality().equals(other.biography, biography) &&
+            const DeepCollectionEquality().equals(other.latitude, latitude) &&
+            const DeepCollectionEquality().equals(other.longitude, longitude) &&
+            const DeepCollectionEquality().equals(other._images, _images));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(uuid),
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(birthdate),
+      const DeepCollectionEquality().hash(bodyType),
+      const DeepCollectionEquality().hash(gender),
+      const DeepCollectionEquality().hash(height),
+      const DeepCollectionEquality().hash(datingGoal),
+      const DeepCollectionEquality().hash(biography),
+      const DeepCollectionEquality().hash(latitude),
+      const DeepCollectionEquality().hash(longitude),
+      const DeepCollectionEquality().hash(_images));
+
   @JsonKey(ignore: true)
   @override
   _$$_ProfileCopyWith<_$_Profile> get copyWith =>
@@ -299,52 +326,40 @@ class _$_Profile with DiagnosticableTreeMixin implements _Profile {
 
 abstract class _Profile implements Profile {
   factory _Profile(
-      {required String uuid,
-      required String name,
-      required DateTime birthdate,
-      required String bodyType,
-      required String gender,
-      required int height,
-      required String datingGoal,
-      required String biography,
-      required double latitude,
-      required double longitude,
-      required List<File?> images}) = _$_Profile;
+      {required final String uuid,
+      required final String name,
+      required final DateTime birthdate,
+      required final String bodyType,
+      required final String gender,
+      required final int height,
+      required final String datingGoal,
+      required final String biography,
+      required final double latitude,
+      required final double longitude,
+      required final List<File?> images}) = _$_Profile;
 
   @override //the unique identifier of the user, used for backend api calls
-  String
-      get uuid; //the unique identifier of the user, used for backend api calls
-  set uuid(String value);
+  String get uuid;
   @override
   String get name;
-  set name(String value);
   @override
   DateTime get birthdate;
-  set birthdate(DateTime value);
   @override
   String get bodyType;
-  set bodyType(String value);
   @override
   String get gender;
-  set gender(String value);
   @override
   int get height;
-  set height(int value);
   @override
   String get datingGoal;
-  set datingGoal(String value);
   @override
   String get biography;
-  set biography(String value);
   @override
   double get latitude;
-  set latitude(double value);
   @override
   double get longitude;
-  set longitude(double value);
   @override //for images
-  List<File?> get images; //for images
-  set images(List<File?> value);
+  List<File?> get images;
   @override
   @JsonKey(ignore: true)
   _$$_ProfileCopyWith<_$_Profile> get copyWith =>

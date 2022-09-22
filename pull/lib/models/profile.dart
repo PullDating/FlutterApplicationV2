@@ -9,7 +9,7 @@ part 'profile.freezed.dart';
 // But if Person was not serializable, we could skip it.
 //part 'profile.g.dart';
 
-@unfreezed
+@freezed
 class Profile with _$Profile {
   factory Profile({
     //the unique identifier of the user, used for backend api calls

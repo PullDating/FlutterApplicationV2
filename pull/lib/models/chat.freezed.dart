@@ -19,17 +19,10 @@ mixin _$Chat {
 //don't need to store the uuids since they are in either the person class under match,
 //or in the uuid provider for the user using the app.
   ///the room id, used for database access. (constructed from the uuid pair)
-  String get roomid =>
-      throw _privateConstructorUsedError; //don't need to store the uuids since they are in either the person class under match,
-//or in the uuid provider for the user using the app.
-  ///the room id, used for database access. (constructed from the uuid pair)
-  set roomid(String value) => throw _privateConstructorUsedError;
+  String get roomid => throw _privateConstructorUsedError;
 
   ///the list of messages in that chat thus far.
   List<Message> get messages => throw _privateConstructorUsedError;
-
-  ///the list of messages in that chat thus far.
-  set messages(List<Message> value) => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatCopyWith<Chat> get copyWith => throw _privateConstructorUsedError;
@@ -96,7 +89,7 @@ class __$$_ChatCopyWithImpl<$Res> extends _$ChatCopyWithImpl<$Res>
           : roomid // ignore: cast_nullable_to_non_nullable
               as String,
       messages: messages == freezed
-          ? _value.messages
+          ? _value._messages
           : messages // ignore: cast_nullable_to_non_nullable
               as List<Message>,
     ));
@@ -106,17 +99,24 @@ class __$$_ChatCopyWithImpl<$Res> extends _$ChatCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Chat with DiagnosticableTreeMixin implements _Chat {
-  _$_Chat({required this.roomid, required this.messages});
+  _$_Chat({required this.roomid, required final List<Message> messages})
+      : _messages = messages;
 
 //don't need to store the uuids since they are in either the person class under match,
 //or in the uuid provider for the user using the app.
   ///the room id, used for database access. (constructed from the uuid pair)
   @override
-  String roomid;
+  final String roomid;
+
+  ///the list of messages in that chat thus far.
+  final List<Message> _messages;
 
   ///the list of messages in that chat thus far.
   @override
-  List<Message> messages;
+  List<Message> get messages {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_messages);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -132,6 +132,21 @@ class _$_Chat with DiagnosticableTreeMixin implements _Chat {
       ..add(DiagnosticsProperty('messages', messages));
   }
 
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Chat &&
+            const DeepCollectionEquality().equals(other.roomid, roomid) &&
+            const DeepCollectionEquality().equals(other._messages, _messages));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(roomid),
+      const DeepCollectionEquality().hash(_messages));
+
   @JsonKey(ignore: true)
   @override
   _$$_ChatCopyWith<_$_Chat> get copyWith =>
@@ -139,24 +154,18 @@ class _$_Chat with DiagnosticableTreeMixin implements _Chat {
 }
 
 abstract class _Chat implements Chat {
-  factory _Chat({required String roomid, required List<Message> messages}) =
-      _$_Chat;
+  factory _Chat(
+      {required final String roomid,
+      required final List<Message> messages}) = _$_Chat;
 
   @override //don't need to store the uuids since they are in either the person class under match,
 //or in the uuid provider for the user using the app.
   ///the room id, used for database access. (constructed from the uuid pair)
-  String
-      get roomid; //don't need to store the uuids since they are in either the person class under match,
-//or in the uuid provider for the user using the app.
-  ///the room id, used for database access. (constructed from the uuid pair)
-  set roomid(String value);
+  String get roomid;
   @override
 
   ///the list of messages in that chat thus far.
   List<Message> get messages;
-
-  ///the list of messages in that chat thus far.
-  set messages(List<Message> value);
   @override
   @JsonKey(ignore: true)
   _$$_ChatCopyWith<_$_Chat> get copyWith => throw _privateConstructorUsedError;

@@ -19,28 +19,15 @@ mixin _$Message {
   ///indicates if the message has been read by the other party or not.
   bool get read => throw _privateConstructorUsedError;
 
-  ///indicates if the message has been read by the other party or not.
-  set read(bool value) => throw _privateConstructorUsedError;
-
   ///the payload of the message
   String get message => throw _privateConstructorUsedError;
-
-  ///the payload of the message
-  set message(String value) => throw _privateConstructorUsedError;
 
   ///when the message was sent.
   DateTime get datetime => throw _privateConstructorUsedError;
 
-  ///when the message was sent.
-  set datetime(DateTime value) => throw _privateConstructorUsedError;
-
   ///the uuid of the user that sent the message. It can be the person using the app
   ///or the person they have matched with.
   String get sender => throw _privateConstructorUsedError;
-
-  ///the uuid of the user that sent the message. It can be the person using the app
-  ///or the person they have matched with.
-  set sender(String value) => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MessageCopyWith<Message> get copyWith => throw _privateConstructorUsedError;
@@ -146,20 +133,20 @@ class _$_Message with DiagnosticableTreeMixin implements _Message {
 
   ///indicates if the message has been read by the other party or not.
   @override
-  bool read;
+  final bool read;
 
   ///the payload of the message
   @override
-  String message;
+  final String message;
 
   ///when the message was sent.
   @override
-  DateTime datetime;
+  final DateTime datetime;
 
   ///the uuid of the user that sent the message. It can be the person using the app
   ///or the person they have matched with.
   @override
-  String sender;
+  final String sender;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -177,6 +164,25 @@ class _$_Message with DiagnosticableTreeMixin implements _Message {
       ..add(DiagnosticsProperty('sender', sender));
   }
 
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Message &&
+            const DeepCollectionEquality().equals(other.read, read) &&
+            const DeepCollectionEquality().equals(other.message, message) &&
+            const DeepCollectionEquality().equals(other.datetime, datetime) &&
+            const DeepCollectionEquality().equals(other.sender, sender));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(read),
+      const DeepCollectionEquality().hash(message),
+      const DeepCollectionEquality().hash(datetime),
+      const DeepCollectionEquality().hash(sender));
+
   @JsonKey(ignore: true)
   @override
   _$$_MessageCopyWith<_$_Message> get copyWith =>
@@ -185,41 +191,28 @@ class _$_Message with DiagnosticableTreeMixin implements _Message {
 
 abstract class _Message implements Message {
   factory _Message(
-      {required bool read,
-      required String message,
-      required DateTime datetime,
-      required String sender}) = _$_Message;
+      {required final bool read,
+      required final String message,
+      required final DateTime datetime,
+      required final String sender}) = _$_Message;
 
   @override
 
   ///indicates if the message has been read by the other party or not.
   bool get read;
-
-  ///indicates if the message has been read by the other party or not.
-  set read(bool value);
   @override
 
   ///the payload of the message
   String get message;
-
-  ///the payload of the message
-  set message(String value);
   @override
 
   ///when the message was sent.
   DateTime get datetime;
-
-  ///when the message was sent.
-  set datetime(DateTime value);
   @override
 
   ///the uuid of the user that sent the message. It can be the person using the app
   ///or the person they have matched with.
   String get sender;
-
-  ///the uuid of the user that sent the message. It can be the person using the app
-  ///or the person they have matched with.
-  set sender(String value);
   @override
   @JsonKey(ignore: true)
   _$$_MessageCopyWith<_$_Message> get copyWith =>

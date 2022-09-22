@@ -21,35 +21,20 @@ Filter _$FilterFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Filter {
   bool get genderMan => throw _privateConstructorUsedError;
-  set genderMan(bool value) => throw _privateConstructorUsedError;
   bool get genderWoman => throw _privateConstructorUsedError;
-  set genderWoman(bool value) => throw _privateConstructorUsedError;
   bool get genderNonBinary => throw _privateConstructorUsedError;
-  set genderNonBinary(bool value) => throw _privateConstructorUsedError;
   int get minAge => throw _privateConstructorUsedError;
-  set minAge(int value) => throw _privateConstructorUsedError;
   int get maxAge => throw _privateConstructorUsedError;
-  set maxAge(int value) => throw _privateConstructorUsedError;
   int get minHeight => throw _privateConstructorUsedError;
-  set minHeight(int value) => throw _privateConstructorUsedError;
   int get maxHeight => throw _privateConstructorUsedError;
-  set maxHeight(int value) => throw _privateConstructorUsedError;
   bool get btObese => throw _privateConstructorUsedError;
-  set btObese(bool value) => throw _privateConstructorUsedError;
   bool get btHeavy => throw _privateConstructorUsedError;
-  set btHeavy(bool value) => throw _privateConstructorUsedError;
   bool get btMuscular => throw _privateConstructorUsedError;
-  set btMuscular(bool value) => throw _privateConstructorUsedError;
   bool get btAverage => throw _privateConstructorUsedError;
-  set btAverage(bool value) => throw _privateConstructorUsedError;
   bool get btLean => throw _privateConstructorUsedError;
-  set btLean(bool value) => throw _privateConstructorUsedError;
 
   ///max distance to the other user in meters
   int get maxDistance => throw _privateConstructorUsedError;
-
-  ///max distance to the other user in meters
-  set maxDistance(int value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -282,33 +267,33 @@ class _$_Filter with DiagnosticableTreeMixin implements _Filter {
       _$$_FilterFromJson(json);
 
   @override
-  bool genderMan;
+  final bool genderMan;
   @override
-  bool genderWoman;
+  final bool genderWoman;
   @override
-  bool genderNonBinary;
+  final bool genderNonBinary;
   @override
-  int minAge;
+  final int minAge;
   @override
-  int maxAge;
+  final int maxAge;
   @override
-  int minHeight;
+  final int minHeight;
   @override
-  int maxHeight;
+  final int maxHeight;
   @override
-  bool btObese;
+  final bool btObese;
   @override
-  bool btHeavy;
+  final bool btHeavy;
   @override
-  bool btMuscular;
+  final bool btMuscular;
   @override
-  bool btAverage;
+  final bool btAverage;
   @override
-  bool btLean;
+  final bool btLean;
 
   ///max distance to the other user in meters
   @override
-  int maxDistance;
+  final int maxDistance;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -335,6 +320,48 @@ class _$_Filter with DiagnosticableTreeMixin implements _Filter {
       ..add(DiagnosticsProperty('maxDistance', maxDistance));
   }
 
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Filter &&
+            const DeepCollectionEquality().equals(other.genderMan, genderMan) &&
+            const DeepCollectionEquality()
+                .equals(other.genderWoman, genderWoman) &&
+            const DeepCollectionEquality()
+                .equals(other.genderNonBinary, genderNonBinary) &&
+            const DeepCollectionEquality().equals(other.minAge, minAge) &&
+            const DeepCollectionEquality().equals(other.maxAge, maxAge) &&
+            const DeepCollectionEquality().equals(other.minHeight, minHeight) &&
+            const DeepCollectionEquality().equals(other.maxHeight, maxHeight) &&
+            const DeepCollectionEquality().equals(other.btObese, btObese) &&
+            const DeepCollectionEquality().equals(other.btHeavy, btHeavy) &&
+            const DeepCollectionEquality()
+                .equals(other.btMuscular, btMuscular) &&
+            const DeepCollectionEquality().equals(other.btAverage, btAverage) &&
+            const DeepCollectionEquality().equals(other.btLean, btLean) &&
+            const DeepCollectionEquality()
+                .equals(other.maxDistance, maxDistance));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(genderMan),
+      const DeepCollectionEquality().hash(genderWoman),
+      const DeepCollectionEquality().hash(genderNonBinary),
+      const DeepCollectionEquality().hash(minAge),
+      const DeepCollectionEquality().hash(maxAge),
+      const DeepCollectionEquality().hash(minHeight),
+      const DeepCollectionEquality().hash(maxHeight),
+      const DeepCollectionEquality().hash(btObese),
+      const DeepCollectionEquality().hash(btHeavy),
+      const DeepCollectionEquality().hash(btMuscular),
+      const DeepCollectionEquality().hash(btAverage),
+      const DeepCollectionEquality().hash(btLean),
+      const DeepCollectionEquality().hash(maxDistance));
+
   @JsonKey(ignore: true)
   @override
   _$$_FilterCopyWith<_$_Filter> get copyWith =>
@@ -350,65 +377,50 @@ class _$_Filter with DiagnosticableTreeMixin implements _Filter {
 
 abstract class _Filter implements Filter {
   factory _Filter(
-      {required bool genderMan,
-      required bool genderWoman,
-      required bool genderNonBinary,
-      required int minAge,
-      required int maxAge,
-      required int minHeight,
-      required int maxHeight,
-      required bool btObese,
-      required bool btHeavy,
-      required bool btMuscular,
-      required bool btAverage,
-      required bool btLean,
-      required int maxDistance}) = _$_Filter;
+      {required final bool genderMan,
+      required final bool genderWoman,
+      required final bool genderNonBinary,
+      required final int minAge,
+      required final int maxAge,
+      required final int minHeight,
+      required final int maxHeight,
+      required final bool btObese,
+      required final bool btHeavy,
+      required final bool btMuscular,
+      required final bool btAverage,
+      required final bool btLean,
+      required final int maxDistance}) = _$_Filter;
 
   factory _Filter.fromJson(Map<String, dynamic> json) = _$_Filter.fromJson;
 
   @override
   bool get genderMan;
-  set genderMan(bool value);
   @override
   bool get genderWoman;
-  set genderWoman(bool value);
   @override
   bool get genderNonBinary;
-  set genderNonBinary(bool value);
   @override
   int get minAge;
-  set minAge(int value);
   @override
   int get maxAge;
-  set maxAge(int value);
   @override
   int get minHeight;
-  set minHeight(int value);
   @override
   int get maxHeight;
-  set maxHeight(int value);
   @override
   bool get btObese;
-  set btObese(bool value);
   @override
   bool get btHeavy;
-  set btHeavy(bool value);
   @override
   bool get btMuscular;
-  set btMuscular(bool value);
   @override
   bool get btAverage;
-  set btAverage(bool value);
   @override
   bool get btLean;
-  set btLean(bool value);
   @override
 
   ///max distance to the other user in meters
   int get maxDistance;
-
-  ///max distance to the other user in meters
-  set maxDistance(int value);
   @override
   @JsonKey(ignore: true)
   _$$_FilterCopyWith<_$_Filter> get copyWith =>

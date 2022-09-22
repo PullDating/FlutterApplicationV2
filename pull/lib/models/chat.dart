@@ -10,7 +10,7 @@ part 'chat.freezed.dart';
 // But if Chat was not serializable, we could skip it.
 // part 'chat.g.dart';
 
-@unfreezed
+@freezed
 class Chat with _$Chat {
   factory Chat({
 

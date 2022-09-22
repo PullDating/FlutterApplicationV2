@@ -27,69 +27,70 @@ class _FilterPageState extends ConsumerState<FilterPage> {
 
   _ageChanged(int min, int max){
     setState(() {
-      ref.read(accountCreationFilterProvider).minAge = min;
-      ref.read(accountCreationFilterProvider).maxAge = max;
+      ref.read(accountCreationFilterProvider).copyWith(minAge: min);
+      ref.read(accountCreationFilterProvider).copyWith(maxAge: max);
     });
   }
 
   _heightChanged(int min, int max){
     setState(() {
-      ref.read(accountCreationFilterProvider).minHeight = min;
-      ref.read(accountCreationFilterProvider).maxHeight = max;
+
+      ref.read(accountCreationFilterProvider).copyWith(minHeight: min);
+      ref.read(accountCreationFilterProvider).copyWith(maxHeight: max);
     });
   }
 
   _maxDistanceChanged(int value){
     setState(() {
-      ref.read(accountCreationFilterProvider).maxDistance = value;
+      ref.read(accountCreationFilterProvider).copyWith(maxDistance: value);
     });
   }
 
   _womenChecked(){
     setState(() {
-      ref.read(accountCreationFilterProvider).genderWoman = !ref.read(accountCreationFilterProvider).genderWoman;
+      ref.read(accountCreationFilterProvider).copyWith(genderWoman: !ref.read(accountCreationFilterProvider).genderWoman);
     });
   }
 
   _menChecked(){
     setState(() {
-      ref.read(accountCreationFilterProvider).genderMan = !ref.read(accountCreationFilterProvider).genderMan;
+      ref.read(accountCreationFilterProvider).copyWith(genderMan: !ref.read(accountCreationFilterProvider).genderMan);
     });
   }
 
   _nonBinaryChecked() {
     setState(() {
-      ref.read(accountCreationFilterProvider).genderNonBinary = !ref.read(accountCreationFilterProvider).genderNonBinary;
+      ref.read(accountCreationFilterProvider).copyWith(genderNonBinary: !ref.read(accountCreationFilterProvider).genderNonBinary);
     });
   }
 
   _obeseChecked(){
     setState(() {
-      ref.read(accountCreationFilterProvider).btObese = !ref.read(accountCreationFilterProvider).btObese;
+      ref.read(accountCreationFilterProvider).copyWith(btObese: !ref.read(accountCreationFilterProvider).btObese);
     });
   }
 
   _heavyChecked(){
     setState(() {
-      ref.read(accountCreationFilterProvider).btHeavy = !ref.read(accountCreationFilterProvider).btHeavy;
+      ref.read(accountCreationFilterProvider).copyWith(btHeavy: !ref.read(accountCreationFilterProvider).btHeavy);
     });
   }
 
   _muscularChecked(){
     setState(() {
-      ref.read(accountCreationFilterProvider).btMuscular = !ref.read(accountCreationFilterProvider).btMuscular;
+      ref.read(accountCreationFilterProvider).copyWith(btMuscular: !ref.read(accountCreationFilterProvider).btMuscular);
     });
   }
 
   _averageChecked(){
     setState(() {
-      ref.read(accountCreationFilterProvider).btAverage = !ref.read(accountCreationFilterProvider).btAverage;
+      ref.read(accountCreationFilterProvider).copyWith(btAverage: !ref.read(accountCreationFilterProvider).btAverage);
     });
   }
 
   _leanChecked(){
     setState(() {
-      ref.read(accountCreationFilterProvider).btLean = !ref.read(accountCreationFilterProvider).btLean;
+      ref.read(accountCreationFilterProvider).copyWith(btLean: !ref.read(accountCreationFilterProvider).btLean);
     });
 
   }

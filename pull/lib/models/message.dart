@@ -9,7 +9,7 @@ part 'message.freezed.dart';
 // But if Message was not serializable, we could skip it.
 //part 'message.g.dart';
 
-@unfreezed
+@freezed
 class Message with _$Message {
   factory Message({
     ///indicates if the message has been read by the other party or not.

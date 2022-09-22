@@ -8,7 +8,7 @@ part 'filter.freezed.dart';
 // But if Person was not serializable, we could skip it.
 part 'filter.g.dart';
 
-@unfreezed
+@freezed
 class Filter with _$Filter {
   factory Filter({
     required bool genderMan,
