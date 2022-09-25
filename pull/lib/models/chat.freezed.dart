@@ -22,7 +22,7 @@ mixin _$Chat {
   String get roomid => throw _privateConstructorUsedError;
 
   ///the list of messages in that chat thus far.
-  List<Message> get messages => throw _privateConstructorUsedError;
+  List<PullMessage> get messages => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatCopyWith<Chat> get copyWith => throw _privateConstructorUsedError;
@@ -32,7 +32,7 @@ mixin _$Chat {
 abstract class $ChatCopyWith<$Res> {
   factory $ChatCopyWith(Chat value, $Res Function(Chat) then) =
       _$ChatCopyWithImpl<$Res>;
-  $Res call({String roomid, List<Message> messages});
+  $Res call({String roomid, List<PullMessage> messages});
 }
 
 /// @nodoc
@@ -56,7 +56,7 @@ class _$ChatCopyWithImpl<$Res> implements $ChatCopyWith<$Res> {
       messages: messages == freezed
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
-              as List<Message>,
+              as List<PullMessage>,
     ));
   }
 }
@@ -66,7 +66,7 @@ abstract class _$$_ChatCopyWith<$Res> implements $ChatCopyWith<$Res> {
   factory _$$_ChatCopyWith(_$_Chat value, $Res Function(_$_Chat) then) =
       __$$_ChatCopyWithImpl<$Res>;
   @override
-  $Res call({String roomid, List<Message> messages});
+  $Res call({String roomid, List<PullMessage> messages});
 }
 
 /// @nodoc
@@ -91,7 +91,7 @@ class __$$_ChatCopyWithImpl<$Res> extends _$ChatCopyWithImpl<$Res>
       messages: messages == freezed
           ? _value._messages
           : messages // ignore: cast_nullable_to_non_nullable
-              as List<Message>,
+              as List<PullMessage>,
     ));
   }
 }
@@ -99,7 +99,7 @@ class __$$_ChatCopyWithImpl<$Res> extends _$ChatCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Chat with DiagnosticableTreeMixin implements _Chat {
-  _$_Chat({required this.roomid, required final List<Message> messages})
+  _$_Chat({required this.roomid, required final List<PullMessage> messages})
       : _messages = messages;
 
 //don't need to store the uuids since they are in either the person class under match,
@@ -109,11 +109,11 @@ class _$_Chat with DiagnosticableTreeMixin implements _Chat {
   final String roomid;
 
   ///the list of messages in that chat thus far.
-  final List<Message> _messages;
+  final List<PullMessage> _messages;
 
   ///the list of messages in that chat thus far.
   @override
-  List<Message> get messages {
+  List<PullMessage> get messages {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_messages);
   }
@@ -156,7 +156,7 @@ class _$_Chat with DiagnosticableTreeMixin implements _Chat {
 abstract class _Chat implements Chat {
   factory _Chat(
       {required final String roomid,
-      required final List<Message> messages}) = _$_Chat;
+      required final List<PullMessage> messages}) = _$_Chat;
 
   @override //don't need to store the uuids since they are in either the person class under match,
 //or in the uuid provider for the user using the app.
@@ -165,7 +165,7 @@ abstract class _Chat implements Chat {
   @override
 
   ///the list of messages in that chat thus far.
-  List<Message> get messages;
+  List<PullMessage> get messages;
   @override
   @JsonKey(ignore: true)
   _$$_ChatCopyWith<_$_Chat> get copyWith => throw _privateConstructorUsedError;

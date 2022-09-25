@@ -20,7 +20,7 @@ class Chat with _$Chat {
     ///the room id, used for database access. (constructed from the uuid pair)
     required String roomid,
     ///the list of messages in that chat thus far.
-    required List<Message> messages,
+    required List<PullMessage> messages,
   }) = _Chat;
 
   //factory Chat.fromJson(Map<String, Object?> json) => _$ChatFromJson(json);

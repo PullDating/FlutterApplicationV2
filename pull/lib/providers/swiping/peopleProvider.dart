@@ -12,6 +12,7 @@ import 'package:pull/models/person.dart';
 import 'package:pull/network/pull_api/repository.dart';
 import 'package:pull/providers/developer_mode.dart';
 import 'package:pull/providers/swiping/people_count_target.dart';
+import 'package:uuid/uuid.dart';
 
 ///returns the people that they are allowed to swipe on.
 final peopleProvider = StateNotifierProvider<PeopleNotifier, List<Person>>((ref) {
@@ -64,8 +65,9 @@ class PeopleNotifier extends StateNotifier<List<Person>> {
       List<Person> new_people = [];
       new_people.addAll(state);
       List<Person> dev_people = [];
+      var uuid = Uuid();
       for(int i = 0; i < num; i++){
-        String newuuid = UniqueKey().toString();
+        String newuuid = uuid.v4();
         dev_people.add(await generateRandomProfile(newuuid));
       }
       new_people.addAll(dev_people);

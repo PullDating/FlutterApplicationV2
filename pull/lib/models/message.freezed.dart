@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$Message {
+mixin _$PullMessage {
   ///indicates if the message has been read by the other party or not.
   bool get read => throw _privateConstructorUsedError;
 
@@ -30,23 +30,25 @@ mixin _$Message {
   String get sender => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $MessageCopyWith<Message> get copyWith => throw _privateConstructorUsedError;
+  $PullMessageCopyWith<PullMessage> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MessageCopyWith<$Res> {
-  factory $MessageCopyWith(Message value, $Res Function(Message) then) =
-      _$MessageCopyWithImpl<$Res>;
+abstract class $PullMessageCopyWith<$Res> {
+  factory $PullMessageCopyWith(
+          PullMessage value, $Res Function(PullMessage) then) =
+      _$PullMessageCopyWithImpl<$Res>;
   $Res call({bool read, String message, DateTime datetime, String sender});
 }
 
 /// @nodoc
-class _$MessageCopyWithImpl<$Res> implements $MessageCopyWith<$Res> {
-  _$MessageCopyWithImpl(this._value, this._then);
+class _$PullMessageCopyWithImpl<$Res> implements $PullMessageCopyWith<$Res> {
+  _$PullMessageCopyWithImpl(this._value, this._then);
 
-  final Message _value;
+  final PullMessage _value;
   // ignore: unused_field
-  final $Res Function(Message) _then;
+  final $Res Function(PullMessage) _then;
 
   @override
   $Res call({
@@ -77,22 +79,24 @@ class _$MessageCopyWithImpl<$Res> implements $MessageCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_MessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
-  factory _$$_MessageCopyWith(
-          _$_Message value, $Res Function(_$_Message) then) =
-      __$$_MessageCopyWithImpl<$Res>;
+abstract class _$$_PullMessageCopyWith<$Res>
+    implements $PullMessageCopyWith<$Res> {
+  factory _$$_PullMessageCopyWith(
+          _$_PullMessage value, $Res Function(_$_PullMessage) then) =
+      __$$_PullMessageCopyWithImpl<$Res>;
   @override
   $Res call({bool read, String message, DateTime datetime, String sender});
 }
 
 /// @nodoc
-class __$$_MessageCopyWithImpl<$Res> extends _$MessageCopyWithImpl<$Res>
-    implements _$$_MessageCopyWith<$Res> {
-  __$$_MessageCopyWithImpl(_$_Message _value, $Res Function(_$_Message) _then)
-      : super(_value, (v) => _then(v as _$_Message));
+class __$$_PullMessageCopyWithImpl<$Res> extends _$PullMessageCopyWithImpl<$Res>
+    implements _$$_PullMessageCopyWith<$Res> {
+  __$$_PullMessageCopyWithImpl(
+      _$_PullMessage _value, $Res Function(_$_PullMessage) _then)
+      : super(_value, (v) => _then(v as _$_PullMessage));
 
   @override
-  _$_Message get _value => super._value as _$_Message;
+  _$_PullMessage get _value => super._value as _$_PullMessage;
 
   @override
   $Res call({
@@ -101,7 +105,7 @@ class __$$_MessageCopyWithImpl<$Res> extends _$MessageCopyWithImpl<$Res>
     Object? datetime = freezed,
     Object? sender = freezed,
   }) {
-    return _then(_$_Message(
+    return _then(_$_PullMessage(
       read: read == freezed
           ? _value.read
           : read // ignore: cast_nullable_to_non_nullable
@@ -124,8 +128,8 @@ class __$$_MessageCopyWithImpl<$Res> extends _$MessageCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Message with DiagnosticableTreeMixin implements _Message {
-  _$_Message(
+class _$_PullMessage with DiagnosticableTreeMixin implements _PullMessage {
+  _$_PullMessage(
       {required this.read,
       required this.message,
       required this.datetime,
@@ -150,14 +154,14 @@ class _$_Message with DiagnosticableTreeMixin implements _Message {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Message(read: $read, message: $message, datetime: $datetime, sender: $sender)';
+    return 'PullMessage(read: $read, message: $message, datetime: $datetime, sender: $sender)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'Message'))
+      ..add(DiagnosticsProperty('type', 'PullMessage'))
       ..add(DiagnosticsProperty('read', read))
       ..add(DiagnosticsProperty('message', message))
       ..add(DiagnosticsProperty('datetime', datetime))
@@ -168,7 +172,7 @@ class _$_Message with DiagnosticableTreeMixin implements _Message {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Message &&
+            other is _$_PullMessage &&
             const DeepCollectionEquality().equals(other.read, read) &&
             const DeepCollectionEquality().equals(other.message, message) &&
             const DeepCollectionEquality().equals(other.datetime, datetime) &&
@@ -185,16 +189,16 @@ class _$_Message with DiagnosticableTreeMixin implements _Message {
 
   @JsonKey(ignore: true)
   @override
-  _$$_MessageCopyWith<_$_Message> get copyWith =>
-      __$$_MessageCopyWithImpl<_$_Message>(this, _$identity);
+  _$$_PullMessageCopyWith<_$_PullMessage> get copyWith =>
+      __$$_PullMessageCopyWithImpl<_$_PullMessage>(this, _$identity);
 }
 
-abstract class _Message implements Message {
-  factory _Message(
+abstract class _PullMessage implements PullMessage {
+  factory _PullMessage(
       {required final bool read,
       required final String message,
       required final DateTime datetime,
-      required final String sender}) = _$_Message;
+      required final String sender}) = _$_PullMessage;
 
   @override
 
@@ -215,6 +219,6 @@ abstract class _Message implements Message {
   String get sender;
   @override
   @JsonKey(ignore: true)
-  _$$_MessageCopyWith<_$_Message> get copyWith =>
+  _$$_PullMessageCopyWith<_$_PullMessage> get copyWith =>
       throw _privateConstructorUsedError;
 }

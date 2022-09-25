@@ -10,8 +10,8 @@ part 'message.freezed.dart';
 //part 'message.g.dart';
 
 @freezed
-class Message with _$Message {
-  factory Message({
+class PullMessage with _$PullMessage {
+  factory PullMessage({
     ///indicates if the message has been read by the other party or not.
     required bool read,
     ///the payload of the message
@@ -21,7 +21,7 @@ class Message with _$Message {
     ///the uuid of the user that sent the message. It can be the person using the app
     ///or the person they have matched with.
     required String sender,
-  }) = _Message;
+  }) = _PullMessage;
 
 //factory Message.fromJson(Map<String, Object?> json)
 //=> _$MessageFromJson(json);

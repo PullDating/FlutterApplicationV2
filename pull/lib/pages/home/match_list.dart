@@ -2,6 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pull/models/person.dart';
 import 'package:pull/models/pullmatch.dart';
 import 'package:pull/providers/match_list.dart';
@@ -54,6 +55,9 @@ class MatchListItem extends StatelessWidget {
         child: GestureDetector(
           onTap: () {
             print("gesture detected");
+            print("uuid: ${match.person.uuid}");
+            //todo figure out how to make this work properly
+            context.go("/chat/${match.person.uuid}");
           },
           child: Slidable(
             endActionPane: ActionPane(

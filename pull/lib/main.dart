@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:pull/pages/chat.dart';
 import 'package:pull/pages/home/home.dart';
+import 'package:pull/pages/home/settings/edit_filters.dart';
 import 'package:pull/pages/home/settings/edit_profile.dart';
 import 'package:pull/pages/home/settings/settings.dart';
 import 'package:pull/pages/login/one_time_password.dart';
@@ -101,6 +103,27 @@ class PullApp extends ConsumerWidget {
           path: '/editProfile',
           builder: (BuildContext context, GoRouterState state) {
             return const EditProfilePage();
+          }
+      ),
+      GoRoute(
+          path: '/editFilters',
+          builder: (BuildContext context, GoRouterState state) {
+            return const EditFiltersPage();
+          }
+      ),
+      GoRoute(
+          path: '/chat/:uuid',
+          builder: (BuildContext context, GoRouterState state) {
+            String uuid = '';
+            print(state.params);
+            print("UUID in param: ${state.params["uuid"]}");
+            if(state.params['uuid'] != null){
+              print("uuid was not null");
+              uuid = state.params['uuid']!;
+            } else {
+              print("uuid was null");
+            }
+            return ChatPage(uuid: uuid,);
           }
       ),
     ]

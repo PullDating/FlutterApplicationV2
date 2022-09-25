@@ -54,6 +54,8 @@ dependencies:
   location: ^4.4.0
   swipable_stack: ^2.0.0
   flutter_slidable: ^2.0.0
+  flutter_chat_ui: ^1.6.4
+  uuid: ^3.0.6
 
 dev_dependencies:
   flutter_test:

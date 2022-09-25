@@ -66,7 +66,7 @@ class _ProfileOverviewPageState extends ConsumerState<ProfileOverviewPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  //todo add context.go to correct route here
+                  context.go('/editFilters');
                 },
                 child: Icon(Icons.filter_list_rounded, color: Colors.white),
                 style: ElevatedButton.styleFrom(

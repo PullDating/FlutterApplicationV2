@@ -129,6 +129,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
       }
       List<File?> tempImages = List.from(profile.images);
       File? temp = tempImages[oldIndex];
+
       //remove at the old index
       tempImages.removeAt(oldIndex);
 

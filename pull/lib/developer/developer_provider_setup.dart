@@ -2,23 +2,24 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pull/developer/image_files.dart';
 import 'package:pull/developer/profile_element_lists.dart';
 import 'package:pull/models/chat.dart';
+import 'package:pull/models/filter.dart';
 import 'package:pull/models/pullmatch.dart';
 import 'package:pull/models/message.dart';
 import 'package:pull/models/person.dart';
 import 'package:pull/models/profile.dart';
 import 'package:pull/network/pull_api/repository.dart';
+import 'package:pull/providers/filter.dart';
 import 'package:pull/providers/match_list.dart';
 import 'package:pull/providers/max_concurrent_matches.dart';
 import 'package:pull/providers/network/auth_token.dart';
 import 'package:pull/providers/network/uuid.dart';
 import 'package:pull/providers/paused.dart';
 import 'package:pull/providers/profile.dart';
-import 'package:pull/providers/swiping/peopleProvider.dart';
+import 'package:uuid/uuid.dart';
 
 Future<void> setupDeveloperProviders (WidgetRef ref) async {
   print("Entered Developer Setup");
@@ -61,11 +62,32 @@ Future<void> setupDeveloperProviders (WidgetRef ref) async {
   //set the profile provider
   ref.read(profileProvider.notifier).set(userprofile);
 
+  //set up the filter provider
+  Filter userFilter = Filter(
+    btAverage: true,
+    btLean: false,
+    btMuscular: false,
+    btHeavy: true,
+    btObese: true,
+    genderMan: false,
+    genderWoman: true,
+    genderNonBinary: false,
+    maxAge: 25,
+    minAge: 21,
+    maxDistance: 15,
+    maxHeight: 245,
+    minHeight: 76,
+  );
+
+  ref.read(filterProvider.notifier).set(userFilter);
+
+
   print("attemping to set the match list");
   //set the match list provider..
-  for(int i = 0; i < ref.read(maxConcurrentMatchesProvider); i++){
+  var uuid = Uuid();
+  for(int i = 0; i < ref.read(maxConcurrentMatchesProvider)-1; i++){
 
-    String newuuid = UniqueKey().toString();
+    String newuuid = uuid.v4();
     PullMatch newMatch = PullMatch(
       chat: generateRandomChat(ref.read(uuidProvider)!, newuuid),
       person: await generateRandomProfile(newuuid),
@@ -118,7 +140,7 @@ Chat generateRandomChat(String uuid1, String uuid2, ) {
   var rng = Random();
   //get a random number for the number of messages that will exist
   int numMessages = rng.nextInt(5);
-  List<Message> messages = [];
+  List<PullMessage> messages = [];
   //populate the messages list with some dummy data
   DateTime prevTime = DateTime.now().subtract(const Duration(days: 50));
 
@@ -144,7 +166,7 @@ Chat generateRandomChat(String uuid1, String uuid2, ) {
     int hours = rng.nextInt(10);
     DateTime newTime = prevTime.add(Duration(days: days, hours: hours));
 
-    Message newMessage = generateRandomMessage(uuid, read, newTime);
+    PullMessage newMessage = generateRandomMessage(uuid, read, newTime);
 
     messages.add(newMessage);
     prevTime = newTime;
@@ -177,12 +199,12 @@ List<String> sample_message_strings = [
   "If you were a vegetable you’d be a cute cumber.",
 ];
 
-Message generateRandomMessage(String uuid, bool read, DateTime time){
+PullMessage generateRandomMessage(String uuid, bool read, DateTime time){
   var rng = Random();
   //generate random index for the message out of sample_message_strings
   int sample_message_index = rng.nextInt(sample_message_strings.length);
 
-  Message newMessage = Message(
+  PullMessage newMessage = PullMessage(
     datetime: time,
     read: read,
     sender: uuid,
